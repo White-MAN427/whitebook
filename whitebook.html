@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHITE BOOK</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f5;
+    --bg3: #ebebeb;
+    --text: #111111;
+    --text2: #555555;
+    --text3: #999999;
+    --accent: #111111;
+    --accent-text: #ffffff;
+    --border: #dddddd;
+    --card: #ffffff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --radius: 14px;
+    --red: #e74c3c;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --orange: #e67e22;
+    --purple: #8e44ad;
+  }
+  [data-theme="dark"] {
+    --bg: #0f0f0f;
+    --bg2: #1a1a1a;
+    --bg3: #242424;
+    --text: #f0f0f0;
+    --text2: #aaaaaa;
+    --text3: #666666;
+    --accent: #f0f0f0;
+    --accent-text: #0f0f0f;
+    --border: #2a2a2a;
+    --card: #1a1a1a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; transition:background .3s,color .3s; }
+
+  /* LOCK SCREEN */
+  #lock-screen {
+    position:fixed; inset:0; background:var(--bg); z-index:9999;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px;
+  }
+  .lock-logo { font-size:36px; font-weight:900; letter-spacing:-1px; }
+  .lock-logo span { font-size:14px; font-weight:400; letter-spacing:4px; display:block; text-align:center; margin-top:4px; color:var(--text2); }
+  .lock-input { 
+    width:280px; padding:14px 18px; border:1.5px solid var(--border); border-radius:10px;
+    background:var(--bg2); color:var(--text); font-size:18px; letter-spacing:8px; text-align:center; outline:none;
+    transition:border-color .2s;
+  }
+  .lock-input:focus { border-color:var(--text); }
+  .lock-btn {
+    width:280px; padding:14px; border:none; border-radius:10px; background:var(--accent); color:var(--accent-text);
+    font-size:16px; font-weight:600; cursor:pointer; transition:opacity .2s;
+  }
+  .lock-btn:hover { opacity:.85; }
+  .lock-err { color:var(--red); font-size:13px; min-height:18px; }
+  .lock-hint { font-size:12px; color:var(--text3); }
+
+  /* SET PASSWORD SCREEN */
+  #set-pass-screen {
+    position:fixed; inset:0; background:var(--bg); z-index:9998;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
+  }
+  .setup-title { font-size:22px; font-weight:700; }
+  .setup-sub { font-size:14px; color:var(--text2); text-align:center; max-width:280px; }
+
+  /* MAIN APP */
+  #app { display:none; flex-direction:column; min-height:100vh; }
+  
+  /* TOP NAV */
+  .top-nav {
+    position:sticky; top:0; z-index:100; background:var(--bg);
+    border-bottom:1px solid var(--border); padding:0 20px;
+    display:flex; align-items:center; gap:8px; height:52px;
+  }
+  .app-brand { font-size:16px; font-weight:800; letter-spacing:-0.5px; margin-right:8px; }
+  .nav-tabs { display:flex; gap:4px; flex:1; overflow-x:auto; scrollbar-width:none; }
+  .nav-tabs::-webkit-scrollbar { display:none; }
+  .nav-tab {
+    padding:6px 14px; border-radius:20px; font-size:13px; font-weight:500;
+    cursor:pointer; border:none; background:transparent; color:var(--text2);
+    white-space:nowrap; transition:all .2s;
+  }
+  .nav-tab.active { background:var(--accent); color:var(--accent-text); }
+  .nav-tab:hover:not(.active) { background:var(--bg2); color:var(--text); }
+  .nav-right { display:flex; gap:8px; align-items:center; margin-left:auto; }
+  .icon-btn {
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--border);
+    background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--text); font-size:16px; transition:background .2s;
+  }
+  .icon-btn:hover { background:var(--bg2); }
+
+  /* MAIN CONTENT */
+  .main { flex:1; padding:24px 20px; max-width:900px; margin:0 auto; width:100%; }
+
+  /* SECTION */
+  .section { display:none; }
+  .section.active { display:block; }
+
+  /* CARDS */
+  .card {
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px; box-shadow:var(--shadow); margin-bottom:16px;
+  }
+  .card-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+
+  /* GRID */
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+
+  /* STAT CARDS */
+  .stat-card {
+    background:var(--bg2); border-radius:10px; padding:16px; text-align:center;
+  }
+  .stat-num { font-size:28px; font-weight:800; }
+  .stat-label { font-size:12px; color:var(--text2); margin-top:4px; }
+
+  /* LESSON SECTION */
+  .month-selector { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+  .month-btn { background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; cursor:pointer; color:var(--text); font-size:14px; }
+  .month-label { font-size:16px; font-weight:600; }
+
+  .subject-row {
+    display:flex; align-items:center; gap:12px; padding:14px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .subject-color { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+  .subject-name { flex:1; font-size:14px; font-weight:500; }
+  .subject-grade {
+    width:60px; padding:6px 8px; border:1px solid var(--border); border-radius:8px;
+    background:var(--bg2); color:var(--text); text-align:center; font-size:14px; outline:none;
+  }
+  .subject-avg { font-size:13px; color:var(--text2); min-width:60px; text-align:right; }
+
+  /* DAILY SOLVE */
+  .day-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+  .day-cell { text-align:center; }
+  .day-name { font-size:11px; color:var(--text3); margin-bottom:6px; }
+  .day-input {
+    width:100%; padding:8px 4px; border:1px solid var(--border); border-radius:8px;
+    background:var(--bg2); color:var(--text); text-align:center; font-size:14px;
+    font-weight:600; outline:none;
+  }
+  .day-input:focus { border-color:var(--text); }
+
+  /* GAMES */
+  .game-card {
+    display:flex; align-items:center; gap:16px; padding:16px;
+    background:var(--bg2); border-radius:12px; margin-bottom:10px; cursor:pointer;
+    transition:background .2s;
+  }
+  .game-card:hover { background:var(--bg3); }
+  .game-icon { font-size:32px; }
+  .game-info { flex:1; }
+  .game-name { font-size:15px; font-weight:600; }
+  .game-hours { font-size:13px; color:var(--text2); margin-top:2px; }
+  .game-add-btn {
+    padding:7px 16px; border:1px solid var(--border); border-radius:8px;
+    background:transparent; color:var(--text); font-size:13px; cursor:pointer;
+    transition:background .2s;
+  }
+  .game-add-btn:hover { background:var(--bg3); }
+  .session-input-row { display:flex; gap:8px; align-items:center; margin-top:8px; }
+  .small-input {
+    padding:8px 12px; border:1px solid var(--border); border-radius:8px;
+    background:var(--bg2); color:var(--text); font-size:14px; outline:none; width:100%;
+  }
+  .small-btn {
+    padding:8px 16px; border:none; border-radius:8px; background:var(--accent);
+    color:var(--accent-text); font-size:13px; cursor:pointer; white-space:nowrap;
+    font-weight:600;
+  }
+
+  /* FILMS */
+  .film-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; }
+  .film-card {
+    background:var(--bg2); border-radius:12px; padding:16px; text-align:center;
+    cursor:pointer; transition:background .2s; position:relative;
+  }
+  .film-card:hover { background:var(--bg3); }
+  .film-emoji { font-size:40px; margin-bottom:10px; }
+  .film-title { font-size:13px; font-weight:600; margin-bottom:6px; }
+  .film-rating { display:flex; justify-content:center; gap:3px; font-size:16px; }
+  .film-del { 
+    position:absolute; top:8px; right:8px; background:none; border:none; cursor:pointer;
+    color:var(--text3); font-size:16px; opacity:0; transition:opacity .2s;
+  }
+  .film-card:hover .film-del { opacity:1; }
+
+  /* ADD FILM */
+  .add-film-form { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .add-film-form input { flex:1; min-width:140px; }
+  .star-select { display:flex; gap:6px; align-items:center; font-size:22px; cursor:pointer; }
+  .star { transition:transform .1s; }
+  .star:hover { transform:scale(1.2); }
+
+  /* SETTINGS */
+  .settings-row {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0; border-bottom:1px solid var(--border);
+  }
+  .settings-label { font-size:15px; font-weight:500; }
+  .settings-sub { font-size:12px; color:var(--text2); margin-top:3px; }
+  .toggle {
+    width:48px; height:26px; border-radius:13px; background:var(--bg3); border:none;
+    cursor:pointer; position:relative; transition:background .3s;
+  }
+  .toggle.on { background:var(--accent); }
+  .toggle::after {
+    content:''; position:absolute; width:20px; height:20px; border-radius:50%;
+    background:#fff; top:3px; left:3px; transition:left .3s;
+  }
+  .toggle.on::after { left:25px; }
+
+  /* LANG SELECTOR */
+  .lang-btns { display:flex; gap:8px; }
+  .lang-btn {
+    padding:6px 14px; border:1px solid var(--border); border-radius:20px;
+    background:transparent; color:var(--text2); font-size:13px; cursor:pointer;
+    transition:all .2s;
+  }
+  .lang-btn.active { background:var(--accent); color:var(--accent-text); border-color:var(--accent); }
+
+  /* MODAL */
+  .modal-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:500;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+  .modal {
+    background:var(--card); border-radius:var(--radius); padding:24px;
+    width:100%; max-width:400px; box-shadow:0 8px 40px rgba(0,0,0,0.2);
+    transform:scale(.95); transition:transform .2s;
+  }
+  .modal-overlay.open .modal { transform:scale(1); }
+  .modal-title { font-size:18px; font-weight:700; margin-bottom:16px; }
+  .modal-actions { display:flex; gap:8px; margin-top:20px; justify-content:flex-end; }
+  .btn-outline {
+    padding:9px 18px; border:1px solid var(--border); border-radius:8px;
+    background:transparent; color:var(--text); font-size:14px; cursor:pointer;
+  }
+  .btn-solid {
+    padding:9px 18px; border:none; border-radius:8px;
+    background:var(--accent); color:var(--accent-text); font-size:14px; cursor:pointer; font-weight:600;
+  }
+
+  /* CHART BAR */
+  .bar-wrap { display:flex; align-items:flex-end; gap:6px; height:120px; margin-top:12px; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .bar {
+    width:100%; border-radius:6px 6px 0 0; background:var(--accent);
+    opacity:.8; transition:opacity .2s; cursor:default;
+    min-height:4px;
+  }
+  .bar:hover { opacity:1; }
+  .bar-lbl { font-size:10px; color:var(--text3); }
+  .bar-val { font-size:11px; font-weight:600; color:var(--text2); }
+
+  /* WEEKLY AVG */
+  .weekly-avg { font-size:28px; font-weight:800; }
+  .avg-label { font-size:13px; color:var(--text2); margin-top:4px; }
+
+  /* ADD BUTTON */
+  .fab {
+    position:fixed; bottom:24px; right:24px; width:52px; height:52px; border-radius:50%;
+    background:var(--accent); color:var(--accent-text); border:none; font-size:24px;
+    cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.2); display:flex;
+    align-items:center; justify-content:center; transition:transform .2s;
+  }
+  .fab:hover { transform:scale(1.08); }
+
+  /* EMPTY STATE */
+  .empty-state { text-align:center; padding:48px 20px; }
+  .empty-icon { font-size:48px; margin-bottom:16px; }
+  .empty-text { color:var(--text2); font-size:15px; }
+
+  /* PASTEL COLORS */
+  .c1{background:#e74c3c} .c2{background:#e67e22} .c3{background:#f1c40f}
+  .c4{background:#27ae60} .c5{background:#2980b9} .c6{background:#8e44ad}
+  .c7{background:#e91e63} .c8{background:#00bcd4}
+
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    .grid2,.grid4{grid-template-columns:1fr 1fr}
+    .grid3{grid-template-columns:1fr 1fr}
+    .day-grid{grid-template-columns:repeat(7,1fr)}
+    .day-name{font-size:9px}
+    .day-input{font-size:12px; padding:6px 2px}
+  }
+</style>
+</head>
+<body>
+
+<!-- SET PASSWORD SCREEN -->
+<div id="set-pass-screen">
+  <div style="font-size:32px;font-weight:900;letter-spacing:-1px">WHITE<br><span style="font-size:14px;letter-spacing:5px;font-weight:400">BOOK</span></div>
+  <div class="setup-title" id="setup-title">Parol yaradın</div>
+  <div class="setup-sub" id="setup-sub">WhiteBook-a ilk dəfə xoş gəlmisiniz! Zəhmət olmasa bir parol təyin edin.</div>
+  <input class="lock-input" type="password" id="set-pass1" placeholder="Yeni parol" maxlength="20">
+  <input class="lock-input" type="password" id="set-pass2" placeholder="Parolu təkrarlayın" maxlength="20" style="margin-top:-8px">
+  <div class="lock-err" id="set-pass-err"></div>
+  <button class="lock-btn" onclick="savePassword()">Parolu yadda saxla</button>
+</div>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen" style="display:none">
+  <div class="lock-logo">WHITE<span>BOOK</span></div>
+  <input class="lock-input" type="password" id="lock-pass-input" placeholder="••••••" maxlength="20" onkeydown="if(event.key==='Enter')tryUnlock()">
+  <div class="lock-err" id="lock-err"></div>
+  <button class="lock-btn" onclick="tryUnlock()">Giriş et</button>
+  <div class="lock-hint" id="lang-hint">Türkçe · Azərbaycanca · English</div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <div class="app-brand">WB</div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('lessons',this)" data-i18n="nav_lessons">Dərslər</button>
+      <button class="nav-tab" onclick="showSection('games',this)" data-i18n="nav_games">Oyunlar</button>
+      <button class="nav-tab" onclick="showSection('films',this)" data-i18n="nav_films">Filmlər</button>
+      <button class="nav-tab" onclick="showSection('settings',this)" data-i18n="nav_settings">Tənzimləmələr</button>
+    </div>
+    <div class="nav-right">
+      <button class="icon-btn" onclick="toggleTheme()" title="Tema" id="theme-btn">🌙</button>
+      <button class="icon-btn" onclick="lockApp()" title="Kilid">🔒</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- === LESSONS === -->
+    <section class="section active" id="section-lessons">
+      <div class="grid2" style="margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-num" id="total-questions">0</div>
+          <div class="stat-label" data-i18n="total_this_week">Bu həftə toplam sual</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="weekly-avg-q">0</div>
+          <div class="stat-label" data-i18n="daily_avg">Günlük ortalama</div>
+        </div>
+      </div>
+
+      <!-- Daily questions -->
+      <div class="card">
+        <div class="card-title" data-i18n="daily_questions">Bu həftə həll etdiyim suallar</div>
+        <div class="day-grid" id="day-grid"></div>
+        <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between">
+          <div class="bar-wrap" id="q-bar-chart" style="flex:1;margin-right:16px"></div>
+        </div>
+      </div>
+
+      <!-- Monthly avg -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div class="card-title" style="margin:0" data-i18n="monthly_notes">Aylıq qiymətlər</div>
+          <div class="month-selector">
+            <button class="month-btn" onclick="changeMonth(-1)">‹</button>
+            <div class="month-label" id="month-label"></div>
+            <button class="month-btn" onclick="changeMonth(1)">›</button>
+          </div>
+        </div>
+        <div id="subjects-list"></div>
+        <div style="margin-top:16px;text-align:right">
+          <span style="font-size:13px;color:var(--text2)" data-i18n="month_avg">Ay ortalaması:</span>
+          <span style="font-size:18px;font-weight:700;margin-left:8px" id="month-avg-display">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- === GAMES === -->
+    <section class="section" id="section-games">
+      <div class="grid2" style="margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-num" id="total-game-hours">0</div>
+          <div class="stat-label" data-i18n="total_hours_month">Bu ay toplam saat</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="game-count">0</div>
+          <div class="stat-label" data-i18n="game_count">Oyun sayı</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div class="card-title" style="margin:0" data-i18n="games_title">Oyunlarım</div>
+          <button class="small-btn" onclick="openAddGame()">+ <span data-i18n="add_game">Oyun əlavə et</span></button>
+        </div>
+        <div id="games-list"></div>
+      </div>
+    </section>
+
+    <!-- === FILMS === -->
+    <section class="section" id="section-films">
+      <div class="card">
+        <div class="card-title" data-i18n="add_film_title">Film əlavə et</div>
+        <div class="add-film-form">
+          <input class="small-input" id="film-name-input" type="text" placeholder="Film adı..." style="flex:2;min-width:160px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="star-select" id="star-select">
+              <span class="star" onclick="setRating(1)">☆</span>
+              <span class="star" onclick="setRating(2)">☆</span>
+              <span class="star" onclick="setRating(3)">☆</span>
+              <span class="star" onclick="setRating(4)">☆</span>
+              <span class="star" onclick="setRating(5)">☆</span>
+            </div>
+          </div>
+          <button class="small-btn" onclick="addFilm()">+ <span data-i18n="add">Əlavə et</span></button>
+        </div>
+      </div>
+
+      <div class="grid3" id="films-list" style="margin-bottom:80px"></div>
+      <div class="stat-card" style="margin-bottom:20px">
+        <div class="stat-num" id="film-count">0</div>
+        <div class="stat-label" data-i18n="watched_films">Izlənmiş filmlər</div>
+      </div>
+    </section>
+
+    <!-- === SETTINGS === -->
+    <section class="section" id="section-settings">
+      <div class="card">
+        <div class="card-title" data-i18n="settings_title">Tənzimləmələr</div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" data-i18n="theme_label">Tema</div>
+            <div class="settings-sub" data-i18n="theme_sub">Açıq / Tünd rejim</div>
+          </div>
+          <button class="toggle" id="theme-toggle" onclick="toggleTheme()"></button>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" data-i18n="lang_label">Dil / Language / Dil</div>
+          </div>
+          <div class="lang-btns">
+            <button class="lang-btn" onclick="setLang('az')">AZ</button>
+            <button class="lang-btn" onclick="setLang('tr')">TR</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" data-i18n="change_pass">Parolu dəyiş</div>
+          </div>
+          <button class="btn-outline" onclick="openChangePass()" data-i18n="change">Dəyiş</button>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" data-i18n="manage_subjects">Dərsləri idarə et</div>
+            <div class="settings-sub" data-i18n="subjects_sub">Dərsləri əlavə et / sil</div>
+          </div>
+          <button class="btn-outline" onclick="openManageSubjects()" data-i18n="manage">İdarə et</button>
+        </div>
+
+        <div class="settings-row">
+          <div>
+            <div class="settings-label" data-i18n="reset_data">Məlumatları sıfırla</div>
+            <div class="settings-sub" data-i18n="reset_sub">Bütün məlumatları sil</div>
+          </div>
+          <button class="btn-outline" style="color:var(--red);border-color:var(--red)" onclick="confirmReset()" data-i18n="reset">Sıfırla</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">WHITE BOOK</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">
+          <span data-i18n="app_desc">Şəxsi izləmə tətbiqi. Dərslər, oyunlar, filmlər — hamısı bir yerdə.</span><br>
+          <span style="color:var(--text3)">v1.0.0</span>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ADD GAME MODAL -->
+<div class="modal-overlay" id="add-game-modal">
+  <div class="modal">
+    <div class="modal-title" data-i18n="add_game_title">Oyun əlavə et</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input class="small-input" id="new-game-name" placeholder="Oyun adı (məs. Valorant)">
+      <div style="font-size:13px;color:var(--text2);margin-top:4px" data-i18n="popular_games">Populyar oyunlar:</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px" id="preset-games"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('add-game-modal')" data-i18n="cancel">Ləğv et</button>
+      <button class="btn-solid" onclick="addGame()" data-i18n="add_btn">Əlavə et</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOG HOURS MODAL -->
+<div class="modal-overlay" id="log-hours-modal">
+  <div class="modal">
+    <div class="modal-title" id="log-hours-title">Valorant — Sessiya əlavə et</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <label style="font-size:13px;color:var(--text2)" data-i18n="hours_played">Neçə saat oynadın?</label>
+      <input class="small-input" id="log-hours-input" type="number" min="0.5" max="24" step="0.5" placeholder="1.5" value="1">
+      <label style="font-size:13px;color:var(--text2)" data-i18n="session_date">Tarix</label>
+      <input class="small-input" id="log-date-input" type="date">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('log-hours-modal')" data-i18n="cancel">Ləğv et</button>
+      <button class="btn-solid" onclick="saveSession()" data-i18n="save">Saxla</button>
+    </div>
+  </div>
+</div>
+
+<!-- MANAGE SUBJECTS MODAL -->
+<div class="modal-overlay" id="subjects-modal">
+  <div class="modal">
+    <div class="modal-title" data-i18n="manage_subjects">Dərsləri idarə et</div>
+    <div id="subjects-manage-list" style="max-height:280px;overflow-y:auto"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <input class="small-input" id="new-subject-input" placeholder="Yeni dərs adı..." style="flex:1">
+      <button class="small-btn" onclick="addSubject()">+</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-solid" onclick="closeModal('subjects-modal');renderSubjects()" data-i18n="done">Tamamla</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASS MODAL -->
+<div class="modal-overlay" id="change-pass-modal">
+  <div class="modal">
+    <div class="modal-title" data-i18n="change_pass">Parolu dəyiş</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input class="small-input" id="old-pass-input" type="password" placeholder="Köhnə parol">
+      <input class="small-input" id="new-pass1-input" type="password" placeholder="Yeni parol">
+      <input class="small-input" id="new-pass2-input" type="password" placeholder="Yeni parolu təkrarlayın">
+      <div class="lock-err" id="change-pass-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModal('change-pass-modal')" data-i18n="cancel">Ləğv et</button>
+      <button class="btn-solid" onclick="doChangePass()" data-i18n="save">Saxla</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+let state = {
+  lang: 'az',
+  theme: 'light',
+  password: '',
+  subjects: [
+    {id:1,name:'Riyaziyyat',color:'c5'},
+    {id:2,name:'Fizika',color:'c2'},
+    {id:3,name:'Kimya',color:'c4'},
+    {id:4,name:'Biologiya',color:'c7'},
+    {id:5,name:'Tarix',color:'c6'},
+    {id:6,name:'Ədəbiyyat',color:'c1'},
+    {id:7,name:'İngilis dili',color:'c3'},
+    {id:8,name:'Coğrafiya',color:'c8'},
+  ],
+  grades: {}, // {monthKey: {subjectId: [grades...]}}
+  dailyQ: {}, // {weekKey: {dayIndex: count}}
+  games: [], // [{id, name, icon, sessions:[{date,hours}]}]
+  films: [], // [{id, name, rating, emoji, addedAt}]
+  currentMonth: new Date().getMonth(),
+  currentYear: new Date().getFullYear(),
+};
+
+const FILM_EMOJIS = ['🎬','🎭','🎪','🎯','🌟','💥','🔥','⚡','🌙','🌈','🎵','🏆'];
+const GAME_ICONS = {
+  'Valorant':'🎯','CS2':'💣','PUBG':'🪖','Fortnite':'🏗️','Apex':'🏃',
+  'GTA V':'🚗','Minecraft':'⛏️','The Witcher':'⚔️','RDR2':'🤠',
+  'God of War':'🪓','Elden Ring':'⚔️','Cyberpunk':'🤖','FIFA':'⚽',
+  'COD':'🔫','Rainbow Six':'🛡️'
+};
+const PRESET_GAMES = Object.keys(GAME_ICONS);
+
+const DAYS = {
+  az:['B.e','Ç.a','Ç','C.a','C','Ş','B'],
+  tr:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],
+  en:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+};
+const MONTHS = {
+  az:['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'],
+  tr:['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+  en:['January','February','March','April','May','June','July','August','September','October','November','December']
+};
+
+const I18N = {
+  az:{
+    nav_lessons:'Dərslər',nav_games:'Oyunlar',nav_films:'Filmlər',nav_settings:'Tənzimləmələr',
+    total_this_week:'Bu həftə toplam sual',daily_avg:'Günlük ortalama',
+    daily_questions:'Bu həftə həll etdiyim suallar',monthly_notes:'Aylıq qiymətlər',
+    month_avg:'Ay ortalaması',total_hours_month:'Bu ay toplam saat',game_count:'Oyun sayı',
+    games_title:'Oyunlarım',add_game:'Oyun əlavə et',add_film_title:'Film əlavə et',
+    add:'Əlavə et',watched_films:'Izlənmiş filmlər',settings_title:'Tənzimləmələr',
+    theme_label:'Tema',theme_sub:'Açıq / Tünd rejim',lang_label:'Dil / Language / Dil',
+    change_pass:'Parolu dəyiş',change:'Dəyiş',manage_subjects:'Dərsləri idarə et',
+    subjects_sub:'Dərsləri əlavə et / sil',manage:'İdarə et',reset_data:'Məlumatları sıfırla',
+    reset_sub:'Bütün məlumatları sil',reset:'Sıfırla',app_desc:'Şəxsi izləmə tətbiqi. Dərslər, oyunlar, filmlər — hamısı bir yerdə.',
+    add_game_title:'Oyun əlavə et',popular_games:'Populyar oyunlar:',cancel:'Ləğv et',
+    add_btn:'Əlavə et',hours_played:'Neçə saat oynadın?',session_date:'Tarix',
+    save:'Saxla',done:'Tamamla',add_session:'Sessiya əlavə et',
+    log_session:'Sessiya qeyd et',month_hours:'Bu ay: {h} saat',
+  },
+  tr:{
+    nav_lessons:'Dersler',nav_games:'Oyunlar',nav_films:'Filmler',nav_settings:'Ayarlar',
+    total_this_week:'Bu hafta toplam soru',daily_avg:'Günlük ortalama',
+    daily_questions:'Bu hafta çözdüğüm sorular',monthly_notes:'Aylık notlar',
+    month_avg:'Ay ortalaması',total_hours_month:'Bu ay toplam saat',game_count:'Oyun sayısı',
+    games_title:'Oyunlarım',add_game:'Oyun ekle',add_film_title:'Film ekle',
+    add:'Ekle',watched_films:'İzlenen filmler',settings_title:'Ayarlar',
+    theme_label:'Tema',theme_sub:'Açık / Koyu mod',lang_label:'Dil / Language / Dil',
+    change_pass:'Şifre değiştir',change:'Değiştir',manage_subjects:'Dersleri yönet',
+    subjects_sub:'Ders ekle / sil',manage:'Yönet',reset_data:'Verileri sıfırla',
+    reset_sub:'Tüm verileri sil',reset:'Sıfırla',app_desc:'Kişisel takip uygulaması. Dersler, oyunlar, filmler — hepsi bir arada.',
+    add_game_title:'Oyun ekle',popular_games:'Popüler oyunlar:',cancel:'İptal',
+    add_btn:'Ekle',hours_played:'Kaç saat oynadın?',session_date:'Tarih',
+    save:'Kaydet',done:'Tamam',add_session:'Seans ekle',
+    log_session:'Seans kaydet',month_hours:'Bu ay: {h} saat',
+  },
+  en:{
+    nav_lessons:'Lessons',nav_games:'Games',nav_films:'Films',nav_settings:'Settings',
+    total_this_week:'Total questions this week',daily_avg:'Daily average',
+    daily_questions:'Questions solved this week',monthly_notes:'Monthly grades',
+    month_avg:'Month average',total_hours_month:'Total hours this month',game_count:'Games tracked',
+    games_title:'My Games',add_game:'Add game',add_film_title:'Add film',
+    add:'Add',watched_films:'Watched films',settings_title:'Settings',
+    theme_label:'Theme',theme_sub:'Light / Dark mode',lang_label:'Dil / Language / Dil',
+    change_pass:'Change password',change:'Change',manage_subjects:'Manage lessons',
+    subjects_sub:'Add / remove lessons',manage:'Manage',reset_data:'Reset data',
+    reset_sub:'Delete all data',reset:'Reset',app_desc:'Personal tracking app. Lessons, games, films — all in one place.',
+    add_game_title:'Add game',popular_games:'Popular games:',cancel:'Cancel',
+    add_btn:'Add',hours_played:'How many hours did you play?',session_date:'Date',
+    save:'Save',done:'Done',add_session:'Add session',
+    log_session:'Log session',month_hours:'This month: {h}h',
+  }
+};
+
+let selectedRating = 0;
+let currentGameId = null;
+
+// ===== STORAGE =====
+function save() { localStorage.setItem('wb_state', JSON.stringify(state)); }
+function load() {
+  const s = localStorage.getItem('wb_state');
+  if (s) { try { state = {...state,...JSON.parse(s)}; } catch(e){} }
+}
+
+// ===== INIT =====
+load();
+
+window.onload = function() {
+  applyTheme();
+  if (!state.password) {
+    document.getElementById('set-pass-screen').style.display = 'flex';
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'none';
+  } else {
+    document.getElementById('set-pass-screen').style.display = 'none';
+    document.getElementById('lock-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('lock-pass-input').focus();
+  }
+  setLang(state.lang, true);
+};
+
+// ===== PASSWORD =====
+function savePassword() {
+  const p1 = document.getElementById('set-pass1').value;
+  const p2 = document.getElementById('set-pass2').value;
+  const err = document.getElementById('set-pass-err');
+  if (p1.length < 4) { err.textContent = 'Parol ən azı 4 simvol olmalıdır'; return; }
+  if (p1 !== p2) { err.textContent = 'Parollar uyğun gəlmir'; return; }
+  state.password = btoa(p1);
+  save();
+  document.getElementById('set-pass-screen').style.display = 'none';
+  unlockApp();
+}
+
+function tryUnlock() {
+  const input = document.getElementById('lock-pass-input').value;
+  const err = document.getElementById('lock-err');
+  if (btoa(input) === state.password) {
+    err.textContent = '';
+    document.getElementById('lock-screen').style.display = 'none';
+    unlockApp();
+  } else {
+    err.textContent = '❌ Yanlış parol';
+    document.getElementById('lock-pass-input').value = '';
+    document.getElementById('lock-pass-input').focus();
+  }
+}
+
+function lockApp() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('lock-screen').style.display = 'flex';
+  document.getElementById('lock-pass-input').value = '';
+  document.getElementById('lock-pass-input').focus();
+}
+
+function unlockApp() {
+  document.getElementById('app').style.display = 'flex';
+  initApp();
+}
+
+function openChangePass() {
+  document.getElementById('old-pass-input').value = '';
+  document.getElementById('new-pass1-input').value = '';
+  document.getElementById('new-pass2-input').value = '';
+  document.getElementById('change-pass-err').textContent = '';
+  openModal('change-pass-modal');
+}
+
+function doChangePass() {
+  const old = document.getElementById('old-pass-input').value;
+  const n1 = document.getElementById('new-pass1-input').value;
+  const n2 = document.getElementById('new-pass2-input').value;
+  const err = document.getElementById('change-pass-err');
+  if (btoa(old) !== state.password) { err.textContent = 'Köhnə parol yanlışdır'; return; }
+  if (n1.length < 4) { err.textContent = 'Yeni parol ən azı 4 simvol olmalıdır'; return; }
+  if (n1 !== n2) { err.textContent = 'Yeni parollar uyğun gəlmir'; return; }
+  state.password = btoa(n1);
+  save();
+  closeModal('change-pass-modal');
+}
+
+// ===== APP INIT =====
+function initApp() {
+  renderDayGrid();
+  renderSubjects();
+  renderGames();
+  renderFilms();
+  updateLessonStats();
+  updateGameStats();
+  applyLang();
+  setActiveLangBtn();
+  updateThemeBtn();
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  save();
+  applyTheme();
+  updateThemeBtn();
+}
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  const t = document.getElementById('theme-toggle');
+  if (t) { t.className = 'toggle' + (state.theme === 'dark' ? ' on' : ''); }
+}
+function updateThemeBtn() {
+  const b = document.getElementById('theme-btn');
+  if (b) b.textContent = state.theme === 'dark' ? '☀️' : '🌙';
+}
+
+// ===== LANG =====
+function setLang(lang, init) {
+  state.lang = lang;
+  if (!init) save();
+  applyLang();
+  setActiveLangBtn();
+  renderDayGrid();
+  updateMonthLabel();
+}
+function applyLang() {
+  const t = I18N[state.lang] || I18N.az;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key]) el.textContent = t[key];
+  });
+}
+function setActiveLangBtn() {
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === state.lang);
+  });
+}
+function t(key, vars) {
+  let s = (I18N[state.lang]||I18N.az)[key] || key;
+  if (vars) Object.keys(vars).forEach(k => s = s.replace('{'+k+'}', vars[k]));
+  return s;
+}
+
+// ===== SECTIONS =====
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== LESSONS — DAY GRID =====
+function getWeekKey() {
+  const d = new Date(); 
+  const jan1 = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil(((d - jan1)/86400000 + jan1.getDay()+1)/7);
+  return d.getFullYear() + '-W' + week;
+}
+function renderDayGrid() {
+  const wk = getWeekKey();
+  if (!state.dailyQ[wk]) state.dailyQ[wk] = {};
+  const dayNames = DAYS[state.lang] || DAYS.az;
+  const grid = document.getElementById('day-grid');
+  if (!grid) return;
+  grid.innerHTML = dayNames.map((name,i) => `
+    <div class="day-cell">
+      <div class="day-name">${name}</div>
+      <input class="day-input" type="number" min="0" max="9999" value="${state.dailyQ[wk][i]||''}" 
+        placeholder="0" oninput="saveDayQ(${i},this.value)">
+    </div>
+  `).join('');
+  renderQChart();
+  updateLessonStats();
+}
+function saveDayQ(idx, val) {
+  const wk = getWeekKey();
+  if (!state.dailyQ[wk]) state.dailyQ[wk] = {};
+  state.dailyQ[wk][idx] = parseInt(val)||0;
+  save();
+  renderQChart();
+  updateLessonStats();
+}
+function renderQChart() {
+  const wk = getWeekKey();
+  const data = state.dailyQ[wk] || {};
+  const vals = [0,1,2,3,4,5,6].map(i => data[i]||0);
+  const max = Math.max(...vals, 1);
+  const dayNames = DAYS[state.lang] || DAYS.az;
+  const chart = document.getElementById('q-bar-chart');
+  if (!chart) return;
+  chart.innerHTML = vals.map((v,i) => `
+    <div class="bar-col">
+      <div class="bar-val">${v||''}</div>
+      <div class="bar" style="height:${Math.round((v/max)*100)}px" title="${dayNames[i]}: ${v}"></div>
+      <div class="bar-lbl">${dayNames[i]}</div>
+    </div>
+  `).join('');
+}
+function updateLessonStats() {
+  const wk = getWeekKey();
+  const data = state.dailyQ[wk] || {};
+  const total = Object.values(data).reduce((a,b)=>a+b,0);
+  const days = Object.values(data).filter(v=>v>0).length;
+  const avg = days ? Math.round(total/7) : 0;
+  const el1 = document.getElementById('total-questions');
+  const el2 = document.getElementById('weekly-avg-q');
+  if (el1) el1.textContent = total;
+  if (el2) el2.textContent = avg;
+}
+
+// ===== LESSONS — GRADES =====
+function getMonthKey() { return state.currentYear + '-' + state.currentMonth; }
+function changeMonth(delta) {
+  state.currentMonth += delta;
+  if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
+  if (state.currentMonth > 11) { state.currentMonth = 0; state.currentYear++; }
+  updateMonthLabel();
+  renderSubjects();
+}
+function updateMonthLabel() {
+  const el = document.getElementById('month-label');
+  if (el) el.textContent = (MONTHS[state.lang]||MONTHS.az)[state.currentMonth] + ' ' + state.currentYear;
+}
+function renderSubjects() {
+  updateMonthLabel();
+  const mk = getMonthKey();
+  if (!state.grades[mk]) state.grades[mk] = {};
+  const list = document.getElementById('subjects-list');
+  if (!list) return;
+  const colors = ['c1','c2','c3','c4','c5','c6','c7','c8'];
+  list.innerHTML = state.subjects.map((sub,idx) => {
+    const grades = state.grades[mk][sub.id] || [];
+    const avg = grades.length ? (grades.reduce((a,b)=>a+b,0)/grades.length).toFixed(1) : '—';
+    const color = sub.color || colors[idx%colors.length];
+    return `
+    <div class="subject-row">
+      <div class="subject-color ${color}"></div>
+      <div class="subject-name">${sub.name}</div>
+      <input class="subject-grade" type="number" min="1" max="100" placeholder="—"
+        value="${grades.length ? grades[grades.length-1] : ''}"
+        onchange="addGrade(${sub.id}, this.value)" title="Yeni qiymət əlavə et">
+      <div class="subject-avg">${avg !== '—' ? '⌀ '+avg : '—'}</div>
+    </div>`;
+  }).join('');
+  updateMonthAvg();
+}
+function addGrade(subId, val) {
+  const mk = getMonthKey();
+  if (!state.grades[mk]) state.grades[mk] = {};
+  if (!state.grades[mk][subId]) state.grades[mk][subId] = [];
+  const v = parseFloat(val);
+  if (!isNaN(v) && v >= 0 && v <= 100) {
+    state.grades[mk][subId].push(v);
+    save();
+    updateMonthAvg();
+    renderSubjects();
+  }
+}
+function updateMonthAvg() {
+  const mk = getMonthKey();
+  const grades = state.grades[mk] || {};
+  let all = [];
+  Object.values(grades).forEach(arr => all = all.concat(arr));
+  const el = document.getElementById('month-avg-display');
+  if (el) el.textContent = all.length ? (all.reduce((a,b)=>a+b,0)/all.length).toFixed(1) : '—';
+}
+
+// ===== GAMES =====
+function openAddGame() {
+  document.getElementById('new-game-name').value = '';
+  const presets = document.getElementById('preset-games');
+  presets.innerHTML = PRESET_GAMES.map(g => 
+    `<button class="lang-btn" onclick="document.getElementById('new-game-name').value='${g}'">${GAME_ICONS[g]} ${g}</button>`
+  ).join('');
+  openModal('add-game-modal');
+}
+function addGame() {
+  const name = document.getElementById('new-game-name').value.trim();
+  if (!name) return;
+  const icon = GAME_ICONS[name] || '🎮';
+  state.games.push({ id: Date.now(), name, icon, sessions: [] });
+  save();
+  closeModal('add-game-modal');
+  renderGames();
+  updateGameStats();
+}
+function renderGames() {
+  const list = document.getElementById('games-list');
+  if (!list) return;
+  if (!state.games.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🎮</div><div class="empty-text">${t('add_game')}</div></div>`;
+    return;
+  }
+  const now = new Date();
+  list.innerHTML = state.games.map(g => {
+    const monthHours = g.sessions.filter(s => {
+      const d = new Date(s.date); 
+      return d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear();
+    }).reduce((a,s)=>a+s.hours,0);
+    const totalH = g.sessions.reduce((a,s)=>a+s.hours,0);
+    return `
+    <div class="game-card">
+      <div class="game-icon">${g.icon}</div>
+      <div class="game-info">
+        <div class="game-name">${g.name}</div>
+        <div class="game-hours">${t('month_hours',{h:monthHours.toFixed(1)})} · Toplam: ${totalH.toFixed(1)}s</div>
+      </div>
+      <button class="game-add-btn" onclick="openLogHours(${g.id})">+ Sessiya</button>
+      <button class="icon-btn" style="margin-left:4px;font-size:14px" onclick="deleteGame(${g.id})">🗑️</button>
+    </div>`;
+  }).join('');
+}
+function deleteGame(id) {
+  if (!confirm('Bu oyunu silmək istəyirsiniz?')) return;
+  state.games = state.games.filter(g => g.id !== id);
+  save(); renderGames(); updateGameStats();
+}
+function openLogHours(gameId) {
+  currentGameId = gameId;
+  const g = state.games.find(x => x.id === gameId);
+  document.getElementById('log-hours-title').textContent = g.name + ' — Sessiya əlavə et';
+  document.getElementById('log-hours-input').value = '1';
+  document.getElementById('log-date-input').value = new Date().toISOString().split('T')[0];
+  openModal('log-hours-modal');
+}
+function saveSession() {
+  const hours = parseFloat(document.getElementById('log-hours-input').value);
+  const date = document.getElementById('log-date-input').value;
+  if (!hours || !date) return;
+  const g = state.games.find(x => x.id === currentGameId);
+  if (g) { g.sessions.push({ date, hours }); save(); }
+  closeModal('log-hours-modal');
+  renderGames();
+  updateGameStats();
+}
+function updateGameStats() {
+  const now = new Date();
+  let total = 0;
+  state.games.forEach(g => {
+    g.sessions.forEach(s => {
+      const d = new Date(s.date);
+      if (d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()) total += s.hours;
+    });
+  });
+  const el1 = document.getElementById('total-game-hours');
+  const el2 = document.getElementById('game-count');
+  if (el1) el1.textContent = total.toFixed(1);
+  if (el2) el2.textContent = state.games.length;
+}
+
+// ===== FILMS =====
+function setRating(n) {
+  selectedRating = n;
+  document.querySelectorAll('.star').forEach((s,i) => { s.textContent = i < n ? '⭐' : '☆'; });
+}
+function addFilm() {
+  const name = document.getElementById('film-name-input').value.trim();
+  if (!name) return;
+  const emoji = FILM_EMOJIS[Math.floor(Math.random()*FILM_EMOJIS.length)];
+  state.films.push({ id: Date.now(), name, rating: selectedRating, emoji, addedAt: new Date().toISOString() });
+  document.getElementById('film-name-input').value = '';
+  selectedRating = 0;
+  setRating(0);
+  save();
+  renderFilms();
+}
+function deleteFilm(id) {
+  state.films = state.films.filter(f => f.id !== id);
+  save(); renderFilms();
+}
+function renderFilms() {
+  const list = document.getElementById('films-list');
+  if (!list) return;
+  const cnt = document.getElementById('film-count');
+  if (cnt) cnt.textContent = state.films.length;
+  if (!state.films.length) {
+    list.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🎬</div><div class="empty-text">Film əlavə et</div></div>`;
+    return;
+  }
+  list.innerHTML = state.films.map(f => `
+    <div class="film-card">
+      <button class="film-del" onclick="deleteFilm(${f.id})">✕</button>
+      <div class="film-emoji">${f.emoji}</div>
+      <div class="film-title">${f.name}</div>
+      <div class="film-rating">${'⭐'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</div>
+    </div>
+  `).join('');
+}
+
+// ===== SUBJECTS MODAL =====
+function openManageSubjects() {
+  renderSubjectsManage();
+  openModal('subjects-modal');
+}
+function renderSubjectsManage() {
+  const list = document.getElementById('subjects-manage-list');
+  const colors = ['c1','c2','c3','c4','c5','c6','c7','c8'];
+  list.innerHTML = state.subjects.map((sub,i) => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div class="subject-color ${sub.color||colors[i%colors.length]}"></div>
+      <span style="flex:1;font-size:14px">${sub.name}</span>
+      <button class="icon-btn" style="font-size:14px" onclick="deleteSubject(${sub.id})">🗑️</button>
+    </div>
+  `).join('');
+}
+function addSubject() {
+  const input = document.getElementById('new-subject-input');
+  const name = input.value.trim();
+  if (!name) return;
+  const colors = ['c1','c2','c3','c4','c5','c6','c7','c8'];
+  state.subjects.push({ id: Date.now(), name, color: colors[state.subjects.length%colors.length] });
+  input.value = '';
+  save();
+  renderSubjectsManage();
+}
+function deleteSubject(id) {
+  state.subjects = state.subjects.filter(s => s.id !== id);
+  save();
+  renderSubjectsManage();
+}
+
+// ===== RESET =====
+function confirmReset() {
+  if (confirm('Bütün məlumatlar silinəcək. Davam etmək istəyirsiniz?')) {
+    const pass = state.password;
+    state = {
+      lang: state.lang, theme: state.theme, password: pass,
+      subjects: [{id:1,name:'Riyaziyyat',color:'c5'},{id:2,name:'Fizika',color:'c2'},{id:3,name:'Kimya',color:'c4'}],
+      grades:{}, dailyQ:{}, games:[], films:[],
+      currentMonth: new Date().getMonth(), currentYear: new Date().getFullYear(),
+    };
+    save();
+    initApp();
+  }
+}
+
+// ===== MODAL HELPERS =====
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
