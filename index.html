@@ -13,221 +13,241 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#f7f7f7;--bg2:#ffffff;--bg3:#efefef;--bg4:#e5e5e5;
+  --bg:#f2f2f2;--bg2:#ffffff;--bg3:#f7f7f7;--bg4:#e8e8e8;
   --text:#111;--text2:#555;--text3:#999;
   --acc:#111;--acc-t:#fff;
   --brd:#e0e0e0;--brd2:#ccc;
-  --red:#e74c3c;--grn:#27ae60;--blue:#2563eb;--org:#e67e22;--pur:#7c3aed;
-  --r:12px;--sh:0 1px 8px rgba(0,0,0,.08);
-  --nav:56px;--safe-b:env(safe-area-inset-bottom,0px);
+  --red:#e74c3c;--grn:#27ae60;--blue:#2563eb;--org:#e67e22;--pur:#7c3aed;--yel:#f59e0b;
+  --r:14px;--sh:0 2px 12px rgba(0,0,0,.07);
+  --nav:60px;--safe-b:env(safe-area-inset-bottom,0px);
 }
 [data-t=dark]{
-  --bg:#0f0f0f;--bg2:#1a1a1a;--bg3:#222;--bg4:#2a2a2a;
+  --bg:#0a0a0a;--bg2:#161616;--bg3:#1e1e1e;--bg4:#262626;
   --text:#f0f0f0;--text2:#aaa;--text3:#555;
-  --acc:#f0f0f0;--acc-t:#0f0f0f;
-  --brd:#2a2a2a;--brd2:#3a3a3a;
-  --sh:0 1px 8px rgba(0,0,0,.4);
+  --acc:#f0f0f0;--acc-t:#0a0a0a;
+  --brd:#252525;--brd2:#333;
+  --sh:0 2px 12px rgba(0,0,0,.5);
 }
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s}
 
-/* ── LOCK / SETUP ── */
-.cover{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:32px}
-.cover-logo{display:flex;flex-direction:column;align-items:center;gap:8px}
-.cover-logo img{width:72px;height:72px;border-radius:18px;object-fit:cover}
-.cover-logo .brand{font-size:28px;font-weight:900;letter-spacing:-1px}
-.cover-logo .sub{font-size:11px;letter-spacing:5px;color:var(--text2)}
-.cover input{width:260px;padding:13px 16px;border:1.5px solid var(--brd2);border-radius:10px;background:var(--bg2);color:var(--text);font-size:16px;letter-spacing:4px;text-align:center;outline:none;transition:border-color .2s}
+/* COVER */
+.cover{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px}
+.cover-logo img{width:76px;height:76px;border-radius:20px;object-fit:cover;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.brand{font-size:30px;font-weight:900;letter-spacing:-1.5px;margin-top:10px;text-align:center}
+.sub{font-size:10px;letter-spacing:6px;color:var(--text2);text-align:center}
+.cover input{width:270px;padding:14px 18px;border:1.5px solid var(--brd2);border-radius:12px;background:var(--bg2);color:var(--text);font-size:17px;letter-spacing:4px;text-align:center;outline:none;transition:border-color .2s}
 .cover input:focus{border-color:var(--acc)}
-.cover .err{font-size:12px;color:var(--red);min-height:16px;text-align:center}
-.cover .hint{font-size:11px;color:var(--text3);text-align:center;max-width:240px;line-height:1.5}
-.btn-main{width:260px;padding:13px;border:none;border-radius:10px;background:var(--acc);color:var(--acc-t);font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s}
+.err{font-size:12px;color:var(--red);min-height:16px;text-align:center}
+.hint{font-size:11px;color:var(--text3);text-align:center;max-width:250px;line-height:1.6}
+.btn-main{width:270px;padding:14px;border:none;border-radius:12px;background:var(--acc);color:var(--acc-t);font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s}
 .btn-main:active{opacity:.8}
-.btn-ghost{background:none;border:1.5px solid var(--brd2);color:var(--text2);font-size:13px;border-radius:8px;padding:8px 18px;cursor:pointer}
+.btn-ghost{background:none;border:1.5px solid var(--brd2);color:var(--text2);font-size:13px;border-radius:9px;padding:8px 18px;cursor:pointer}
 
-/* ── APP SHELL ── */
+/* APP */
 #app{display:none;flex-direction:column;min-height:100vh;padding-bottom:calc(var(--nav) + var(--safe-b))}
 
-/* ── TOP BAR ── */
-.topbar{position:sticky;top:0;z-index:50;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 16px;height:54px;display:flex;align-items:center;gap:10px}
-.tb-logo{width:32px;height:32px;border-radius:8px;object-fit:cover;cursor:pointer;flex-shrink:0}
-.tb-title{font-size:15px;font-weight:800;letter-spacing:-.5px;flex:1}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg2);border-bottom:1px solid var(--brd);padding:0 16px;height:56px;display:flex;align-items:center;gap:10px}
+.tb-logo{width:34px;height:34px;border-radius:9px;object-fit:cover;cursor:pointer;flex-shrink:0}
+.tb-title{font-size:16px;font-weight:800;letter-spacing:-.5px;flex:1}
 .tb-actions{display:flex;gap:6px}
-.ib{width:34px;height:34px;border-radius:50%;border:1px solid var(--brd);background:none;cursor:pointer;color:var(--text);font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.ib{width:36px;height:36px;border-radius:50%;border:1px solid var(--brd);background:none;cursor:pointer;color:var(--text);font-size:17px;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .ib:active{background:var(--bg3)}
 
-/* ── BOTTOM NAV ── */
+/* BOTTOM NAV */
 .bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--bg2);border-top:1px solid var(--brd);display:flex;height:calc(var(--nav) + var(--safe-b));padding-bottom:var(--safe-b)}
-.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:10px;font-weight:500;transition:color .15s;padding:0}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;border:none;background:none;color:var(--text3);font-size:9px;font-weight:600;letter-spacing:.3px;transition:color .15s;padding:0;text-transform:uppercase}
 .bnav-item.active{color:var(--acc)}
-.bnav-item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bnav-item svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── SCROLL AREAS ── */
+/* PAGES */
 .page{display:none;padding:16px;max-width:640px;margin:0 auto;width:100%}
 .page.active{display:block}
 
-/* ── CARDS ── */
+/* CARDS */
 .card{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
-.card-h{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.card-h{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 
-/* ── STAT ROW ── */
+/* STATS */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.stat{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sh)}
-.stat-n{font-size:26px;font-weight:800}
-.stat-l{font-size:11px;color:var(--text2);margin-top:3px}
+.stat{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:16px 14px;text-align:center;box-shadow:var(--sh);cursor:pointer;transition:background .15s}
+.stat:active{background:var(--bg3)}
+.stat-n{font-size:28px;font-weight:800;line-height:1}
+.stat-l{font-size:11px;color:var(--text2);margin-top:5px;font-weight:500}
+.stat-sub{font-size:10px;color:var(--text3);margin-top:2px}
 
-/* ── INPUTS ── */
-.inp{width:100%;padding:10px 12px;border:1px solid var(--brd);border-radius:8px;background:var(--bg3);color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+/* INPUTS */
+.inp{width:100%;padding:11px 13px;border:1px solid var(--brd);border-radius:9px;background:var(--bg3);color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
 .inp:focus{border-color:var(--acc)}
-.inp-sm{padding:8px 10px;font-size:13px}
 select.inp{cursor:pointer}
 
-/* ── BUTTONS ── */
-.btn{padding:9px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s}
+/* BUTTONS */
+.btn{padding:9px 16px;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;white-space:nowrap}
 .btn:active{opacity:.75}
 .btn-acc{background:var(--acc);color:var(--acc-t)}
 .btn-out{background:none;border:1px solid var(--brd2);color:var(--text2)}
 .btn-red{background:none;border:1px solid var(--red);color:var(--red)}
 
-/* ── DAY GRID ── */
-.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+/* PERIOD TABS */
+.period-tabs{display:flex;background:var(--bg3);border-radius:10px;padding:3px;gap:2px;margin-bottom:14px}
+.ptab{flex:1;padding:7px;border:none;background:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s}
+.ptab.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+
+/* DAY GRID */
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .dcell{text-align:center}
-.dname{font-size:9px;color:var(--text3);margin-bottom:4px;text-transform:uppercase}
-.dinp{width:100%;padding:7px 2px;border:1px solid var(--brd);border-radius:7px;background:var(--bg3);color:var(--text);text-align:center;font-size:13px;font-weight:600;outline:none}
+.dname{font-size:9px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;font-weight:600}
+.dinp{width:100%;padding:8px 2px;border:1px solid var(--brd);border-radius:8px;background:var(--bg3);color:var(--text);text-align:center;font-size:13px;font-weight:700;outline:none}
 .dinp:focus{border-color:var(--acc)}
+.dinp.has-val{border-color:var(--acc);background:var(--bg2)}
 
-/* ── BAR CHART ── */
-.bchart{display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:12px}
+/* BAR CHART */
+.bchart{display:flex;align-items:flex-end;gap:4px;height:90px;margin-top:14px;padding:0 2px}
 .bcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.bbar{width:100%;border-radius:4px 4px 0 0;background:var(--acc);opacity:.7;min-height:3px;transition:height .3s}
-.blbl{font-size:9px;color:var(--text3)}
-.bval{font-size:10px;font-weight:600;color:var(--text2)}
+.bbar{width:100%;border-radius:5px 5px 0 0;background:var(--acc);opacity:.65;min-height:4px;transition:height .4s ease}
+.bbar.today{opacity:1}
+.blbl{font-size:9px;color:var(--text3);font-weight:600}
+.bval{font-size:10px;font-weight:700;color:var(--text2)}
 
-/* ── SUBJECT ROW ── */
-.srow{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--brd)}
+/* SUBJECT ROW - questions */
+.srow{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--brd)}
 .srow:last-child{border-bottom:none}
 .sdot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.sname{flex:1;font-size:13px;font-weight:500}
-.sgrade{width:54px;padding:6px 6px;border:1px solid var(--brd);border-radius:7px;background:var(--bg3);color:var(--text);text-align:center;font-size:13px;outline:none}
-.savg{font-size:12px;color:var(--text2);min-width:52px;text-align:right}
+.sname{flex:1;font-size:13px;font-weight:600}
+.sq-inp{width:70px;padding:7px 6px;border:1px solid var(--brd);border-radius:8px;background:var(--bg3);color:var(--text);text-align:center;font-size:13px;font-weight:700;outline:none}
+.sq-inp:focus{border-color:var(--acc)}
+.savg{font-size:12px;color:var(--text2);min-width:58px;text-align:right;font-weight:600}
 
-/* ── MONTH NAV ── */
-.mnav{display:flex;align-items:center;gap:8px}
-.mnav button{background:none;border:1px solid var(--brd);border-radius:7px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:13px}
-.mlbl{font-size:13px;font-weight:600;white-space:nowrap}
+/* MONTH NAV */
+.mnav{display:flex;align-items:center;gap:6px}
+.mnav button{background:none;border:1px solid var(--brd);border-radius:8px;padding:5px 11px;cursor:pointer;color:var(--text);font-size:14px;font-weight:600}
+.mlbl{font-size:13px;font-weight:700;white-space:nowrap}
 
-/* ── GAME ITEM ── */
-.gitem{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg3);border-radius:10px;margin-bottom:8px}
-.gicon{font-size:28px;flex-shrink:0}
+/* GAME ITEM */
+.gitem{display:flex;align-items:center;gap:12px;padding:13px;background:var(--bg3);border-radius:12px;margin-bottom:8px;border:1px solid var(--brd)}
+.gicon{font-size:30px;flex-shrink:0}
 .ginfo{flex:1;min-width:0}
-.gname{font-size:14px;font-weight:600}
-.ghours{font-size:12px;color:var(--text2);margin-top:2px}
-.gbtn{padding:6px 12px;border:1px solid var(--brd2);border-radius:7px;background:none;color:var(--text2);font-size:12px;cursor:pointer;white-space:nowrap}
+.gname{font-size:14px;font-weight:700}
+.ghours{font-size:12px;color:var(--text2);margin-top:3px}
+.gbtn{padding:7px 13px;border:1px solid var(--brd2);border-radius:8px;background:none;color:var(--text2);font-size:12px;cursor:pointer;font-weight:600}
 
-/* ── FILM GRID ── */
-.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-.fcard{background:var(--bg3);border-radius:10px;padding:12px;text-align:center;position:relative}
-.fmoji{font-size:36px;margin-bottom:8px}
-.ftitle{font-size:12px;font-weight:600;margin-bottom:5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.fstars{font-size:14px}
-.fdel{position:absolute;top:6px;right:6px;background:none;border:none;color:var(--text3);font-size:14px;cursor:pointer;opacity:0;transition:opacity .2s;line-height:1}
-.fcard:hover .fdel,.fcard:focus-within .fdel{opacity:1}
+/* FILM GRID */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:80px}
+.fcard{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px;text-align:center;position:relative;box-shadow:var(--sh)}
+.fmoji{font-size:38px;margin-bottom:8px}
+.ftitle{font-size:12px;font-weight:700;margin-bottom:8px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.4}
+.fscore{font-size:22px;font-weight:900;margin-bottom:3px}
+.fscore-bar{height:4px;border-radius:2px;margin:0 auto;width:80%;margin-bottom:4px}
+.fdate{font-size:10px;color:var(--text3)}
+.fdel{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text3);font-size:15px;cursor:pointer;opacity:0;transition:opacity .2s;line-height:1;padding:2px}
+.fcard:hover .fdel{opacity:1}
 
-/* ── STAR PICKER ── */
-.stars{display:flex;gap:4px;font-size:24px;cursor:pointer}
-.star{transition:transform .1s}
-.star:hover{transform:scale(1.15)}
+/* SCORE INPUT */
+.score-wrap{display:flex;flex-direction:column;gap:6px}
+.score-display{font-size:32px;font-weight:900;text-align:center;transition:color .3s}
+.score-slider{width:100%;accent-color:var(--acc)}
 
-/* ── SETTINGS ── */
-.srow2{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--brd)}
+/* NOTES */
+.note-card{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:var(--sh);position:relative}
+.note-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.note-title{font-size:14px;font-weight:700}
+.note-date{font-size:11px;color:var(--text3)}
+.note-body{font-size:13px;color:var(--text2);line-height:1.6;white-space:pre-wrap}
+.note-tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
+.note-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--text3);font-size:15px;cursor:pointer;opacity:0;transition:opacity .2s}
+.note-card:hover .note-del{opacity:1}
+.note-colors{display:flex;gap:6px;flex-wrap:wrap}
+.nc{width:24px;height:24px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border-color .15s}
+.nc.sel{border-color:var(--acc)}
+
+/* SETTINGS */
+.srow2{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--brd)}
 .srow2:last-child{border-bottom:none}
-.slbl{font-size:14px;font-weight:500}
+.slbl{font-size:14px;font-weight:600}
 .ssub{font-size:11px;color:var(--text2);margin-top:2px}
-.tog{width:44px;height:24px;border-radius:12px;background:var(--bg4);border:none;cursor:pointer;position:relative;transition:background .25s;flex-shrink:0}
+.tog{width:46px;height:26px;border-radius:13px;background:var(--bg4);border:none;cursor:pointer;position:relative;transition:background .25s;flex-shrink:0}
 .tog.on{background:var(--acc)}
-.tog::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .25s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.tog::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:left .25s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .tog.on::after{left:23px}
 .lbtns{display:flex;gap:6px}
-.lbtn{padding:5px 12px;border:1px solid var(--brd2);border-radius:20px;background:none;color:var(--text2);font-size:12px;cursor:pointer;transition:all .15s}
+.lbtn{padding:6px 13px;border:1px solid var(--brd2);border-radius:20px;background:none;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
 .lbtn.on{background:var(--acc);color:var(--acc-t);border-color:var(--acc)}
 
-/* ── MODAL ── */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
 .overlay.open{opacity:1;pointer-events:all}
 @media(min-width:480px){.overlay{align-items:center}}
-.modal{background:var(--bg2);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:420px;transform:translateY(20px);transition:transform .25s;max-height:90vh;overflow-y:auto}
-@media(min-width:480px){.modal{border-radius:16px;transform:scale(.96)}}
+.modal{background:var(--bg2);border-radius:22px 22px 0 0;padding:20px 20px calc(20px + var(--safe-b));width:100%;max-width:440px;transform:translateY(30px);transition:transform .25s;max-height:90vh;overflow-y:auto}
+@media(min-width:480px){.modal{border-radius:18px;transform:scale(.95)}}
 .overlay.open .modal{transform:none}
-@media(min-width:480px){.overlay.open .modal{transform:none;transform:scale(1)}}
-.modal-drag{width:36px;height:4px;border-radius:2px;background:var(--brd2);margin:0 auto 16px}
-.modal-h{font-size:17px;font-weight:700;margin-bottom:16px}
+@media(min-width:480px){.overlay.open .modal{transform:scale(1)}}
+.modal-drag{width:38px;height:4px;border-radius:2px;background:var(--brd2);margin:0 auto 18px}
+.modal-h{font-size:18px;font-weight:800;margin-bottom:16px}
 .modal-acts{display:flex;gap:8px;margin-top:18px;justify-content:flex-end}
-.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-.form-lbl{font-size:12px;color:var(--text2);font-weight:500}
+.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.form-lbl{font-size:12px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 
-/* ── PROFILE LOGO ── */
-.logo-wrap{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--brd);margin-bottom:4px}
-.logo-prev{width:52px;height:52px;border-radius:12px;object-fit:cover;border:1px solid var(--brd)}
-.logo-info{flex:1}
-.logo-name{font-size:14px;font-weight:600}
+/* LOGO */
+.logo-wrap{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--brd);margin-bottom:4px}
+.logo-prev{width:54px;height:54px;border-radius:13px;object-fit:cover;border:1px solid var(--brd)}
+.logo-name{font-size:15px;font-weight:700}
 .logo-sub{font-size:12px;color:var(--text2);margin-top:2px}
 
-/* ── PRESET CHIPS ── */
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.chip{padding:5px 10px;border:1px solid var(--brd);border-radius:20px;background:var(--bg3);font-size:12px;cursor:pointer;transition:background .15s}
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{padding:6px 11px;border:1px solid var(--brd);border-radius:20px;background:var(--bg3);font-size:12px;cursor:pointer;transition:background .15s;font-weight:500}
 .chip:hover{background:var(--bg4)}
 
-/* ── ADD FILM ROW ── */
-.add-film-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+/* EMPTY */
+.empty{text-align:center;padding:48px 20px;color:var(--text2)}
+.empty-ico{font-size:48px;margin-bottom:14px}
+.empty-txt{font-size:14px}
 
-/* ── EMPTY ── */
-.empty{text-align:center;padding:40px 20px;color:var(--text2)}
-.empty-ico{font-size:44px;margin-bottom:12px}
-
-/* ── COLORS ── */
+/* COLOR DOTS */
 .col-btns{display:flex;gap:8px;flex-wrap:wrap}
-.col-btn{width:26px;height:26px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:border-color .15s}
+.col-btn{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border-color .15s}
 .col-btn.sel{border-color:var(--acc)}
 
-/* scrollbar */
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:2px}
+/* WEEKLY SUMMARY */
+.week-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.ws-item{background:var(--bg3);border-radius:10px;padding:10px;text-align:center}
+.ws-num{font-size:18px;font-weight:800}
+.ws-lbl{font-size:10px;color:var(--text2);margin-top:2px;font-weight:600}
+
+/* SECTION DIVIDER */
+.sdiv{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin:18px 0 8px;padding:0 2px}
+
+/* FILM SCORE COLOR UTIL - set via JS */
 </style>
 </head>
 <body>
 
-<!-- ══ SETUP SCREEN ══ -->
+<!-- SETUP -->
 <div class="cover" id="scr-setup">
-  <div class="cover-logo">
-    <img src="icon-192.png" id="setup-logo-img" alt="logo">
-    <div class="brand">WHITE BOOK</div>
-    <div class="sub">PERSONAL TRACKER</div>
-  </div>
-  <div class="hint" id="setup-hint">Xoş gəldiniz! Parolunuzu yaradın (min. 8 simvol)</div>
-  <input class="inp" type="password" id="sp1" placeholder="Yeni parol" maxlength="32">
-  <input class="inp" type="password" id="sp2" placeholder="Parolu təkrarlayın" maxlength="32" style="margin-top:-10px">
+  <div class="cover-logo"><img src="icon-192.png" alt="logo"></div>
+  <div class="brand">WHITE BOOK</div>
+  <div class="sub">PERSONAL TRACKER</div>
+  <div class="hint" id="setup-hint">Parol yaradın (min. 8 simvol)</div>
+  <input type="password" id="sp1" placeholder="Yeni parol" maxlength="32">
+  <input type="password" id="sp2" placeholder="Parolu təkrarlayın" maxlength="32" style="margin-top:-8px">
   <div class="err" id="setup-err"></div>
   <button class="btn-main" onclick="doSetup()">Başla</button>
 </div>
 
-<!-- ══ LOCK SCREEN ══ -->
+<!-- LOCK -->
 <div class="cover" id="scr-lock" style="display:none">
-  <div class="cover-logo">
-    <img id="lock-logo-img" src="icon-192.png" alt="logo" style="width:72px;height:72px;border-radius:18px;object-fit:cover">
-    <div class="brand" id="lock-app-name">WHITE BOOK</div>
-    <div class="sub">PERSONAL TRACKER</div>
-  </div>
-  <input class="inp" type="password" id="lp" placeholder="••••••••" maxlength="32" onkeydown="if(event.key==='Enter')doUnlock()">
+  <div class="cover-logo"><img id="lock-logo-img" src="icon-192.png" alt="logo"></div>
+  <div class="brand" id="lock-app-name">WHITE BOOK</div>
+  <div class="sub">PERSONAL TRACKER</div>
+  <input type="password" id="lp" placeholder="••••••••" maxlength="32" onkeydown="if(event.key==='Enter')doUnlock()">
   <div class="err" id="lock-err"></div>
-  <button class="btn-main" onclick="doUnlock()">Giriş</button>
+  <button class="btn-main" onclick="doUnlock()" id="l-enter-btn">Giriş</button>
 </div>
 
-<!-- ══ APP ══ -->
+<!-- APP -->
 <div id="app">
-
-  <!-- TOP BAR -->
   <div class="topbar">
-    <img class="tb-logo" id="app-logo" src="icon-192.png" alt="logo" onclick="openLogoModal()">
+    <img class="tb-logo" id="app-logo" src="icon-192.png" alt="logo" onclick="openModal('m-logo')">
     <div class="tb-title" id="app-name-lbl">White Book</div>
     <div class="tb-actions">
       <button class="ib" id="theme-ib" onclick="toggleTheme()">🌙</button>
@@ -235,22 +255,30 @@ select.inp{cursor:pointer}
     </div>
   </div>
 
-  <!-- PAGES -->
+  <!-- LESSONS PAGE -->
   <div class="page active" id="pg-lessons">
     <div class="stats">
-      <div class="stat"><div class="stat-n" id="st-total">0</div><div class="stat-l" id="l-total-q">Bu həftə sual</div></div>
-      <div class="stat"><div class="stat-n" id="st-avg">0</div><div class="stat-l" id="l-daily-avg">Günlük ortalama</div></div>
+      <div class="stat" onclick="showWeekModal()">
+        <div class="stat-n" id="st-total">0</div>
+        <div class="stat-l" id="l-total-q">Bu həftə sual</div>
+        <div class="stat-sub" id="l-tap-week">↗ Həftəlik bax</div>
+      </div>
+      <div class="stat" onclick="showMonthModal()">
+        <div class="stat-n" id="st-avg">0</div>
+        <div class="stat-l" id="l-daily-avg">Günlük ortalama</div>
+        <div class="stat-sub" id="l-tap-month">↗ Aylıq bax</div>
+      </div>
     </div>
 
     <div class="card">
-      <div class="card-h"><span id="l-daily-qs">Bu həftə həll etdiyim suallar</span></div>
+      <div class="card-h"><span id="l-daily-qs">Bu həftə suallar</span></div>
       <div class="dgrid" id="day-grid"></div>
       <div class="bchart" id="bar-chart"></div>
     </div>
 
     <div class="card">
       <div class="card-h">
-        <span id="l-monthly">Aylıq qiymətlər</span>
+        <span id="l-subjects">Dərslər — sual sayı</span>
         <div class="mnav">
           <button onclick="chMonth(-1)">‹</button>
           <span class="mlbl" id="month-lbl"></span>
@@ -259,57 +287,100 @@ select.inp{cursor:pointer}
       </div>
       <div id="subj-list"></div>
       <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:12px;color:var(--text2)" id="l-month-avg">Ay ortalaması</span>
-        <span style="font-size:18px;font-weight:800" id="month-avg">—</span>
+        <span style="font-size:12px;color:var(--text2);font-weight:600" id="l-month-total">Ay cəmi</span>
+        <span style="font-size:20px;font-weight:800" id="month-total">0</span>
       </div>
     </div>
   </div>
 
+  <!-- GAMES PAGE -->
   <div class="page" id="pg-games">
+    <div class="period-tabs">
+      <button class="ptab active" id="gtab-week" onclick="setGamePeriod('week',this)" id="l-week">Həftəlik</button>
+      <button class="ptab" id="gtab-month" onclick="setGamePeriod('month',this)" id="l-month">Aylıq</button>
+      <button class="ptab" id="gtab-all" onclick="setGamePeriod('all',this)" id="l-all">Hamısı</button>
+    </div>
     <div class="stats">
-      <div class="stat"><div class="stat-n" id="st-ghours">0</div><div class="stat-l" id="l-month-h">Bu ay saat</div></div>
-      <div class="stat"><div class="stat-n" id="st-gcnt">0</div><div class="stat-l" id="l-game-cnt">Oyun sayı</div></div>
+      <div class="stat">
+        <div class="stat-n" id="st-ghours">0</div>
+        <div class="stat-l" id="l-period-hours">Bu həftə saat</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n" id="st-gcnt">0</div>
+        <div class="stat-l" id="l-game-cnt">Oyun sayı</div>
+      </div>
     </div>
     <div class="card">
       <div class="card-h">
         <span id="l-my-games">Oyunlarım</span>
-        <button class="btn btn-acc" onclick="openModal('m-addgame')" id="l-add-game-btn">+ Əlavə et</button>
+        <button class="btn btn-acc" id="l-add-game-btn" onclick="openAddGame()">+ Əlavə et</button>
       </div>
       <div id="games-list"></div>
     </div>
   </div>
 
+  <!-- FILMS PAGE -->
   <div class="page" id="pg-films">
     <div class="card">
       <div class="card-h" id="l-add-film">Film əlavə et</div>
-      <div class="add-film-row">
-        <input class="inp inp-sm" id="film-inp" placeholder="Film adı..." style="flex:2;min-width:120px">
-        <div class="stars" id="star-row">
-          <span class="star" onclick="setStar(1)">☆</span>
-          <span class="star" onclick="setStar(2)">☆</span>
-          <span class="star" onclick="setStar(3)">☆</span>
-          <span class="star" onclick="setStar(4)">☆</span>
-          <span class="star" onclick="setStar(5)">☆</span>
-        </div>
-        <button class="btn btn-acc" onclick="addFilm()">+</button>
+      <div class="form-row">
+        <label class="form-lbl" id="l-film-name-lbl">Film adı</label>
+        <input class="inp" id="film-inp" placeholder="Film adı...">
       </div>
+      <div class="form-row">
+        <label class="form-lbl" id="l-score-lbl">Puan (10 üzərindən)</label>
+        <div class="score-wrap">
+          <div class="score-display" id="score-disp">7.0</div>
+          <input type="range" class="score-slider" id="score-slider" min="0" max="10" step="0.1" value="7" oninput="updateScore(this.value)">
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-weight:600">
+            <span>0</span><span>5</span><span>10</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-acc" style="width:100%" onclick="addFilm()" id="l-add-film-btn">+ Ekle</button>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 2px">
-      <span style="font-size:13px;color:var(--text2)" id="l-watched">İzlənmiş filmler</span>
-      <span style="font-size:16px;font-weight:700" id="film-cnt">0</span>
+      <span style="font-size:12px;color:var(--text2);font-weight:600" id="l-watched">İzlenen</span>
+      <span style="font-size:16px;font-weight:800" id="film-cnt">0</span>
     </div>
     <div class="fgrid" id="films-grid"></div>
   </div>
 
+  <!-- NOTES PAGE -->
+  <div class="page" id="pg-notes">
+    <div class="card">
+      <div class="card-h" id="l-new-note">Yeni not</div>
+      <div class="form-row">
+        <label class="form-lbl" id="l-note-title-lbl">Başlık</label>
+        <input class="inp" id="note-title-inp" id="l-note-title-ph" placeholder="Not başlığı...">
+      </div>
+      <div class="form-row">
+        <label class="form-lbl" id="l-note-body-lbl">Not</label>
+        <textarea class="inp" id="note-body-inp" placeholder="Notunuzu yazın..." rows="4" style="resize:vertical;line-height:1.6"></textarea>
+      </div>
+      <div class="form-row">
+        <label class="form-lbl" id="l-note-tag-lbl">Etiket / Renk</label>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <input class="inp" id="note-tag-inp" placeholder="Etiket..." style="width:140px;flex:none">
+          <div class="note-colors" id="note-color-pick"></div>
+        </div>
+      </div>
+      <button class="btn btn-acc" style="width:100%" onclick="addNote()" id="l-save-note">Notu saxla</button>
+    </div>
+    <div class="sdiv" id="l-all-notes">Bütün notlar</div>
+    <div id="notes-list"></div>
+  </div>
+
+  <!-- SETTINGS PAGE -->
   <div class="page" id="pg-settings">
     <div class="card">
       <div class="logo-wrap">
         <img class="logo-prev" id="set-logo-prev" src="icon-192.png" alt="logo">
-        <div class="logo-info">
+        <div>
           <div class="logo-name" id="set-app-name-disp">White Book</div>
-          <div class="logo-sub" id="l-tap-change">Logoya tap et — dəyiş</div>
+          <div class="logo-sub" id="l-tap-change">Logoya toxun — dəyiş</div>
         </div>
-        <button class="btn btn-out" onclick="openLogoModal()" id="l-change-btn">Dəyiş</button>
+        <button class="btn btn-out" onclick="openModal('m-logo')" id="l-change-btn" style="margin-left:auto">Dəyiş</button>
       </div>
 
       <div class="srow2">
@@ -317,7 +388,7 @@ select.inp{cursor:pointer}
         <button class="tog" id="tog-theme" onclick="toggleTheme()"></button>
       </div>
       <div class="srow2">
-        <div><div class="slbl" id="l-lang">Dil</div></div>
+        <div><div class="slbl" id="l-lang">Dil / Language / Dil</div></div>
         <div class="lbtns">
           <button class="lbtn" onclick="setLang('az')">AZ</button>
           <button class="lbtn" onclick="setLang('tr')">TR</button>
@@ -337,32 +408,35 @@ select.inp{cursor:pointer}
         <button class="btn btn-red" onclick="doReset()" id="l-reset-btn">Sıfırla</button>
       </div>
     </div>
-    <div style="text-align:center;padding:16px 0;font-size:11px;color:var(--text3)">White Book v1.1 — PWA</div>
+    <div style="text-align:center;padding:16px 0;font-size:11px;color:var(--text3);font-weight:600">WHITE BOOK v1.1 — PWA</div>
   </div>
 
   <!-- BOTTOM NAV -->
   <nav class="bnav">
-    <button class="bnav-item active" id="nav-lessons" onclick="goPage('lessons',this)">
+    <button class="bnav-item active" onclick="goPage('lessons',this)">
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
       <span id="ln-lessons">Dərslər</span>
     </button>
-    <button class="bnav-item" id="nav-games" onclick="goPage('games',this)">
+    <button class="bnav-item" onclick="goPage('games',this)">
       <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="12" r="1" fill="currentColor"/></svg>
       <span id="ln-games">Oyunlar</span>
     </button>
-    <button class="bnav-item" id="nav-films" onclick="goPage('films',this)">
+    <button class="bnav-item" onclick="goPage('films',this)">
       <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M17 7h5M2 17h5M17 17h5"/></svg>
       <span id="ln-films">Filmlər</span>
     </button>
-    <button class="bnav-item" id="nav-settings" onclick="goPage('settings',this)">
+    <button class="bnav-item" onclick="goPage('notes',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+      <span id="ln-notes">Notlar</span>
+    </button>
+    <button class="bnav-item" onclick="goPage('settings',this)">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       <span id="ln-settings">Ayarlar</span>
     </button>
   </nav>
 </div>
 
-<!-- ══ MODALS ══ -->
-
+<!-- MODALS -->
 <!-- Add Game -->
 <div class="overlay" id="m-addgame">
   <div class="modal">
@@ -403,6 +477,42 @@ select.inp{cursor:pointer}
   </div>
 </div>
 
+<!-- Game Stats Modal -->
+<div class="overlay" id="m-gamestats">
+  <div class="modal">
+    <div class="modal-drag"></div>
+    <div class="modal-h" id="gstats-title">Oyun statistikası</div>
+    <div id="gstats-body"></div>
+    <div class="modal-acts">
+      <button class="btn btn-acc" onclick="closeModal('m-gamestats')" id="lm-close">Bağla</button>
+    </div>
+  </div>
+</div>
+
+<!-- Week Stats Modal -->
+<div class="overlay" id="m-weekstats">
+  <div class="modal">
+    <div class="modal-drag"></div>
+    <div class="modal-h" id="lm-week-title">Həftəlik statistika</div>
+    <div id="weekstats-body"></div>
+    <div class="modal-acts">
+      <button class="btn btn-acc" onclick="closeModal('m-weekstats')">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Month Stats Modal -->
+<div class="overlay" id="m-monthstats">
+  <div class="modal">
+    <div class="modal-drag"></div>
+    <div class="modal-h" id="lm-month-title">Aylıq statistika</div>
+    <div id="monthstats-body"></div>
+    <div class="modal-acts">
+      <button class="btn btn-acc" onclick="closeModal('m-monthstats')">OK</button>
+    </div>
+  </div>
+</div>
+
 <!-- Change Pass -->
 <div class="overlay" id="m-chpass">
   <div class="modal">
@@ -433,35 +543,33 @@ select.inp{cursor:pointer}
   <div class="modal">
     <div class="modal-drag"></div>
     <div class="modal-h" id="lm-subj">Dərsləri idarə et</div>
-    <div id="subj-mgr-list" style="max-height:260px;overflow-y:auto"></div>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <input class="inp" id="new-subj-inp" placeholder="Yeni dərs..." style="flex:1">
+    <div id="subj-mgr-list" style="max-height:240px;overflow-y:auto"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+      <input class="inp" id="new-subj-inp" placeholder="Yeni dərs adı..." style="flex:1;min-width:140px">
       <div class="col-btns" id="subj-col-btns"></div>
     </div>
-    <div style="margin-top:8px">
-      <button class="btn btn-acc" onclick="addSubj()" style="width:100%" id="lm-addsubj">+ Dərs əlavə et</button>
-    </div>
+    <button class="btn btn-acc" onclick="addSubj()" style="width:100%;margin-top:8px" id="lm-addsubj">+ Əlavə et</button>
     <div class="modal-acts">
       <button class="btn btn-acc" onclick="closeModal('m-subj');renderSubj()" id="lm-done">Tamamla</button>
     </div>
   </div>
 </div>
 
-<!-- Logo / Name Modal -->
+<!-- Logo Modal -->
 <div class="overlay" id="m-logo">
   <div class="modal">
     <div class="modal-drag"></div>
     <div class="modal-h" id="lm-logo">Profil / Logo</div>
     <div class="form-row">
-      <label class="form-lbl" id="lm-appname">Uygulama adı</label>
+      <label class="form-lbl" id="lm-appname">Tətbiq adı</label>
       <input class="inp" id="appname-inp" placeholder="White Book" maxlength="24">
     </div>
     <div class="form-row">
       <label class="form-lbl" id="lm-logo-upload">Logo (şəkil yüklə)</label>
-      <input type="file" id="logo-file" accept="image/*" onchange="previewLogo(this)" style="font-size:13px">
+      <input type="file" id="logo-file" accept="image/*" onchange="previewLogo(this)" style="font-size:13px;color:var(--text)">
     </div>
     <div style="text-align:center;margin:10px 0">
-      <img id="logo-preview" src="icon-192.png" alt="preview" style="width:64px;height:64px;border-radius:14px;object-fit:cover;border:1px solid var(--brd)">
+      <img id="logo-preview" src="icon-192.png" style="width:64px;height:64px;border-radius:14px;object-fit:cover;border:1px solid var(--brd)">
     </div>
     <div class="modal-acts">
       <button class="btn btn-out" onclick="closeModal('m-logo')" id="lm-cancel4">Ləğv et</button>
@@ -472,98 +580,105 @@ select.inp{cursor:pointer}
 
 <script>
 'use strict';
-// ══ DATA ══
-const COLORS=['#e74c3c','#e67e22','#f1c40f','#27ae60','#2563eb','#7c3aed','#e91e63','#00bcd4'];
-const GAMES_PRESET={
-  'Valorant':'🎯','CS2':'💣','PUBG':'🪖','Fortnite':'🏗️','Apex Legends':'🏃',
-  'GTA V':'🚗','Minecraft':'⛏️','The Witcher 3':'⚔️','RDR2':'🤠',
-  'God of War':'🪓','Elden Ring':'🧿','Cyberpunk 2077':'🤖',
-  'FIFA':'⚽','Call of Duty':'🔫','Rainbow Six':'🛡️','League of Legends':'🧙'
-};
-const FILM_EMOJIS=['🎬','🎭','🎪','🌟','💥','🔥','⚡','🌙','🎵','🏆','🎨','🌈'];
-const MONTHS_MAP={
-  az:['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'],
-  tr:['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
-  en:['January','February','March','April','May','June','July','August','September','October','November','December']
-};
-const DAYS_MAP={
-  az:['B.e','Ç.a','Ç','C.a','C','Ş','B'],
-  tr:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],
-  en:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
-};
+// ══ CONSTANTS ══
+const COLORS=['#e74c3c','#e67e22','#f1c40f','#27ae60','#2563eb','#7c3aed','#e91e63','#00bcd4','#64748b'];
+const GAMES_PRESET={'Valorant':'🎯','CS2':'💣','PUBG':'🪖','Fortnite':'🏗️','Apex Legends':'🏃','GTA V':'🚗','Minecraft':'⛏️','The Witcher 3':'⚔️','RDR2':'🤠','God of War':'🪓','Elden Ring':'🧿','Cyberpunk 2077':'🤖','FIFA':'⚽','Call of Duty':'🔫','Rainbow Six':'🛡️','League of Legends':'🧙'};
+const FILM_EMOJIS=['🎬','🎭','🎪','🌟','💥','🔥','⚡','🌙','🎵','🏆','🎨','🌈','🎞️','🍿'];
+const NOTE_COLORS=['#f59e0b','#10b981','#3b82f6','#8b5cf6','#ef4444','#ec4899','#64748b'];
+const MONTHS_MAP={az:['Yanvar','Fevral','Mart','Aprel','May','İyun','İyul','Avqust','Sentyabr','Oktyabr','Noyabr','Dekabr'],tr:['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],en:['January','February','March','April','May','June','July','August','September','October','November','December']};
+const DAYS_MAP={az:['B.e','Ç.a','Ç','C.a','C','Ş','B'],tr:['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'],en:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']};
+
+// ══ I18N ══
 const TR={
   az:{
-    'l-total-q':'Bu həftə sual','l-daily-avg':'Günlük ortalama',
-    'l-daily-qs':'Bu həftə həll etdiyim suallar','l-monthly':'Aylıq qiymətlər',
-    'l-month-avg':'Ay ortalaması','l-month-h':'Bu ay saat','l-game-cnt':'Oyun sayı',
-    'l-my-games':'Oyunlarım','l-add-game-btn':'+ Əlavə et','l-add-film':'Film əlavə et',
-    'l-watched':'İzlənmiş','l-theme':'Tema','l-theme-sub':'Açıq / Tünd',
-    'l-lang':'Dil','l-chpass':'Parolu dəyiş','l-change2':'Dəyiş','l-change-btn':'Dəyiş',
-    'l-subj-mgr':'Dərslər','l-manage':'İdarə et','l-reset':'Sıfırla',
-    'l-reset-sub':'Bütün məlumatları sil','l-reset-btn':'Sıfırla',
-    'l-tap-change':'Logoya tap et — dəyiş',
-    'ln-lessons':'Dərslər','ln-games':'Oyunlar','ln-films':'Filmlər','ln-settings':'Ayarlar',
-    'lm-addgame':'Oyun əlavə et','lm-gname':'Oyun adı','lm-popular':'Populyar',
+    'l-total-q':'Bu həftə sual','l-daily-avg':'Günlük ortalama','l-tap-week':'↗ Həftəlik bax','l-tap-month':'↗ Aylıq bax',
+    'l-daily-qs':'Bu həftə suallar','l-subjects':'Dərslər — sual sayı','l-month-total':'Ay cəmi',
+    'l-period-hours':'Saat','l-game-cnt':'Oyun sayı','l-my-games':'Oyunlarım','l-add-game-btn':'+ Əlavə et',
+    'l-add-film':'Film əlavə et','l-film-name-lbl':'Film adı','l-score-lbl':'Puan (10 üzərindən)',
+    'l-add-film-btn':'+ Əlavə et','l-watched':'İzlənmiş',
+    'l-new-note':'Yeni not','l-note-title-lbl':'Başlıq','l-note-body-lbl':'Not','l-note-tag-lbl':'Etiket / Rəng',
+    'l-save-note':'Notu saxla','l-all-notes':'Bütün notlar',
+    'l-theme':'Tema','l-theme-sub':'Açıq / Tünd','l-lang':'Dil',
+    'l-chpass':'Parolu dəyiş','l-change2':'Dəyiş','l-change-btn':'Dəyiş',
+    'l-subj-mgr':'Dərsləri idarə et','l-manage':'İdarə et',
+    'l-reset':'Sıfırla','l-reset-sub':'Bütün məlumatları sil','l-reset-btn':'Sıfırla',
+    'l-tap-change':'Logoya toxun — dəyiş',
+    'ln-lessons':'Dərslər','ln-games':'Oyunlar','ln-films':'Filmlər','ln-notes':'Notlar','ln-settings':'Ayarlar',
+    'lm-addgame':'Oyun əlavə et','lm-gname':'Oyun adı','lm-popular':'Populyar oyunlar',
     'lm-cancel':'Ləğv et','lm-add':'Əlavə et','lm-hours':'Neçə saat?','lm-date':'Tarix',
-    'lm-cancel2':'Ləğv et','lm-save':'Saxla','lm-chpass':'Parolu dəyiş',
-    'lm-oldp':'Köhnə parol','lm-newp':'Yeni parol (min. 8)','lm-newp2':'Təkrarlayın',
-    'lm-cancel3':'Ləğv et','lm-save2':'Saxla','lm-subj':'Dərslər',
-    'lm-addsubj':'+ Dərs əlavə et','lm-done':'Tamamla','lm-logo':'Profil / Logo',
-    'lm-appname':'Uygulama adı','lm-logo-upload':'Logo (şəkil yüklə)',
+    'lm-cancel2':'Ləğv et','lm-save':'Saxla','lm-close':'Bağla',
+    'lm-week-title':'Həftəlik statistika','lm-month-title':'Aylıq statistika',
+    'lm-chpass':'Parolu dəyiş','lm-oldp':'Köhnə parol','lm-newp':'Yeni parol (min. 8)',
+    'lm-newp2':'Təkrarlayın','lm-cancel3':'Ləğv et','lm-save2':'Saxla',
+    'lm-subj':'Dərsləri idarə et','lm-addsubj':'+ Əlavə et','lm-done':'Tamamla',
+    'lm-logo':'Profil / Logo','lm-appname':'Tətbiq adı','lm-logo-upload':'Logo (şəkil yüklə)',
     'lm-cancel4':'Ləğv et','lm-save3':'Saxla',
-    'setup-hint':'Xoş gəldiniz! Parolunuzu yaradın (min. 8 simvol)',
-    'month-session':'Bu ay: {h}s'
+    'l-enter-btn':'Giriş',
+    'setup-hint':'Parol yaradın (min. 8 simvol)',
+    'month-h-str':'{h} saat','week-avg':'Həftəlik ortalama','month-total-str':'Aylıq cəm',
+    'gtab-week':'Həftəlik','gtab-month':'Aylıq','gtab-all':'Hamısı',
   },
   tr:{
-    'l-total-q':'Bu hafta soru','l-daily-avg':'Günlük ortalama',
-    'l-daily-qs':'Bu hafta çözdüğüm sorular','l-monthly':'Aylık notlar',
-    'l-month-avg':'Ay ortalaması','l-month-h':'Bu ay saat','l-game-cnt':'Oyun sayısı',
-    'l-my-games':'Oyunlarım','l-add-game-btn':'+ Ekle','l-add-film':'Film ekle',
-    'l-watched':'İzlenen','l-theme':'Tema','l-theme-sub':'Açık / Koyu',
-    'l-lang':'Dil','l-chpass':'Şifre değiştir','l-change2':'Değiştir','l-change-btn':'Değiştir',
-    'l-subj-mgr':'Dersler','l-manage':'Yönet','l-reset':'Sıfırla',
-    'l-reset-sub':'Tüm verileri sil','l-reset-btn':'Sıfırla',
-    'l-tap-change':'Logo değiştirmek için tıkla',
-    'ln-lessons':'Dersler','ln-games':'Oyunlar','ln-films':'Filmler','ln-settings':'Ayarlar',
-    'lm-addgame':'Oyun ekle','lm-gname':'Oyun adı','lm-popular':'Popüler',
+    'l-total-q':'Bu hafta soru','l-daily-avg':'Günlük ortalama','l-tap-week':'↗ Haftalık bak','l-tap-month':'↗ Aylık bak',
+    'l-daily-qs':'Bu hafta sorular','l-subjects':'Dersler — soru sayısı','l-month-total':'Ay toplamı',
+    'l-period-hours':'Saat','l-game-cnt':'Oyun sayısı','l-my-games':'Oyunlarım','l-add-game-btn':'+ Ekle',
+    'l-add-film':'Film ekle','l-film-name-lbl':'Film adı','l-score-lbl':'Puan (10 üzerinden)',
+    'l-add-film-btn':'+ Ekle','l-watched':'İzlenen',
+    'l-new-note':'Yeni not','l-note-title-lbl':'Başlık','l-note-body-lbl':'Not','l-note-tag-lbl':'Etiket / Renk',
+    'l-save-note':'Notu kaydet','l-all-notes':'Tüm notlar',
+    'l-theme':'Tema','l-theme-sub':'Açık / Koyu','l-lang':'Dil',
+    'l-chpass':'Şifre değiştir','l-change2':'Değiştir','l-change-btn':'Değiştir',
+    'l-subj-mgr':'Dersleri yönet','l-manage':'Yönet',
+    'l-reset':'Sıfırla','l-reset-sub':'Tüm verileri sil','l-reset-btn':'Sıfırla',
+    'l-tap-change':'Logoya dokun — değiştir',
+    'ln-lessons':'Dersler','ln-games':'Oyunlar','ln-films':'Filmler','ln-notes':'Notlar','ln-settings':'Ayarlar',
+    'lm-addgame':'Oyun ekle','lm-gname':'Oyun adı','lm-popular':'Popüler oyunlar',
     'lm-cancel':'İptal','lm-add':'Ekle','lm-hours':'Kaç saat?','lm-date':'Tarih',
-    'lm-cancel2':'İptal','lm-save':'Kaydet','lm-chpass':'Şifre değiştir',
-    'lm-oldp':'Eski şifre','lm-newp':'Yeni şifre (min. 8)','lm-newp2':'Tekrarlayın',
-    'lm-cancel3':'İptal','lm-save2':'Kaydet','lm-subj':'Dersler',
-    'lm-addsubj':'+ Ders ekle','lm-done':'Tamam','lm-logo':'Profil / Logo',
-    'lm-appname':'Uygulama adı','lm-logo-upload':'Logo (resim yükle)',
+    'lm-cancel2':'İptal','lm-save':'Kaydet','lm-close':'Kapat',
+    'lm-week-title':'Haftalık istatistik','lm-month-title':'Aylık istatistik',
+    'lm-chpass':'Şifre değiştir','lm-oldp':'Eski şifre','lm-newp':'Yeni şifre (min. 8)',
+    'lm-newp2':'Tekrarlayın','lm-cancel3':'İptal','lm-save2':'Kaydet',
+    'lm-subj':'Dersleri yönet','lm-addsubj':'+ Ekle','lm-done':'Tamam',
+    'lm-logo':'Profil / Logo','lm-appname':'Uygulama adı','lm-logo-upload':'Logo (resim yükle)',
     'lm-cancel4':'İptal','lm-save3':'Kaydet',
-    'setup-hint':'Hoş geldiniz! Şifrenizi oluşturun (min. 8 karakter)',
-    'month-session':'Bu ay: {h}s'
+    'l-enter-btn':'Giriş',
+    'setup-hint':'Şifre oluşturun (min. 8 karakter)',
+    'month-h-str':'{h} saat','week-avg':'Haftalık ortalama','month-total-str':'Aylık toplam',
+    'gtab-week':'Haftalık','gtab-month':'Aylık','gtab-all':'Tümü',
   },
   en:{
-    'l-total-q':'Questions this week','l-daily-avg':'Daily average',
-    'l-daily-qs':'Questions solved this week','l-monthly':'Monthly grades',
-    'l-month-avg':'Month average','l-month-h':'Hours this month','l-game-cnt':'Games tracked',
-    'l-my-games':'My Games','l-add-game-btn':'+ Add','l-add-film':'Add Film',
-    'l-watched':'Watched','l-theme':'Theme','l-theme-sub':'Light / Dark',
-    'l-lang':'Language','l-chpass':'Change password','l-change2':'Change','l-change-btn':'Change',
-    'l-subj-mgr':'Subjects','l-manage':'Manage','l-reset':'Reset',
-    'l-reset-sub':'Delete all data','l-reset-btn':'Reset',
-    'l-tap-change':'Tap to change logo',
-    'ln-lessons':'Lessons','ln-games':'Games','ln-films':'Films','ln-settings':'Settings',
-    'lm-addgame':'Add game','lm-gname':'Game name','lm-popular':'Popular',
+    'l-total-q':'Questions this week','l-daily-avg':'Daily average','l-tap-week':'↗ Weekly view','l-tap-month':'↗ Monthly view',
+    'l-daily-qs':'Questions this week','l-subjects':'Subjects — question count','l-month-total':'Month total',
+    'l-period-hours':'Hours','l-game-cnt':'Games tracked','l-my-games':'My Games','l-add-game-btn':'+ Add',
+    'l-add-film':'Add Film','l-film-name-lbl':'Film name','l-score-lbl':'Score (out of 10)',
+    'l-add-film-btn':'+ Add','l-watched':'Watched',
+    'l-new-note':'New note','l-note-title-lbl':'Title','l-note-body-lbl':'Note','l-note-tag-lbl':'Tag / Color',
+    'l-save-note':'Save note','l-all-notes':'All notes',
+    'l-theme':'Theme','l-theme-sub':'Light / Dark','l-lang':'Language',
+    'l-chpass':'Change password','l-change2':'Change','l-change-btn':'Change',
+    'l-subj-mgr':'Manage subjects','l-manage':'Manage',
+    'l-reset':'Reset','l-reset-sub':'Delete all data','l-reset-btn':'Reset',
+    'l-tap-change':'Tap logo to change',
+    'ln-lessons':'Lessons','ln-games':'Games','ln-films':'Films','ln-notes':'Notes','ln-settings':'Settings',
+    'lm-addgame':'Add game','lm-gname':'Game name','lm-popular':'Popular games',
     'lm-cancel':'Cancel','lm-add':'Add','lm-hours':'How many hours?','lm-date':'Date',
-    'lm-cancel2':'Cancel','lm-save':'Save','lm-chpass':'Change password',
-    'lm-oldp':'Old password','lm-newp':'New password (min. 8)','lm-newp2':'Repeat',
-    'lm-cancel3':'Cancel','lm-save2':'Save','lm-subj':'Subjects',
-    'lm-addsubj':'+ Add subject','lm-done':'Done','lm-logo':'Profile / Logo',
-    'lm-appname':'App name','lm-logo-upload':'Logo (upload image)',
+    'lm-cancel2':'Cancel','lm-save':'Save','lm-close':'Close',
+    'lm-week-title':'Weekly stats','lm-month-title':'Monthly stats',
+    'lm-chpass':'Change password','lm-oldp':'Old password','lm-newp':'New password (min. 8)',
+    'lm-newp2':'Repeat','lm-cancel3':'Cancel','lm-save2':'Save',
+    'lm-subj':'Manage subjects','lm-addsubj':'+ Add','lm-done':'Done',
+    'lm-logo':'Profile / Logo','lm-appname':'App name','lm-logo-upload':'Logo (upload image)',
     'lm-cancel4':'Cancel','lm-save3':'Save',
-    'setup-hint':'Welcome! Create your password (min. 8 characters)',
-    'month-session':'This month: {h}h'
+    'l-enter-btn':'Enter',
+    'setup-hint':'Create your password (min. 8 characters)',
+    'month-h-str':'{h}h','week-avg':'Weekly average','month-total-str':'Monthly total',
+    'gtab-week':'Weekly','gtab-month':'Monthly','gtab-all':'All',
   }
 };
 
 // ══ STATE ══
 let S={
-  lang:'az', theme:'light', pass:'',
-  appName:'White Book', logo:'',
+  lang:'az',theme:'light',pass:'',appName:'White Book',logo:'',
   subjects:[
     {id:1,name:'Riyaziyyat',color:'#2563eb'},
     {id:2,name:'Fizika',color:'#e67e22'},
@@ -574,151 +689,89 @@ let S={
     {id:7,name:'İngilis dili',color:'#f1c40f'},
     {id:8,name:'Coğrafiya',color:'#00bcd4'},
   ],
-  grades:{}, dailyQ:{}, games:[], films:[],
-  cm: new Date().getMonth(), cy: new Date().getFullYear()
+  questions:{}, // {monthKey: {subjectId: count}}
+  dailyQ:{},    // {weekKey: {dayIndex: count}}
+  games:[],
+  films:[],
+  notes:[],
+  cm:new Date().getMonth(),cy:new Date().getFullYear()
 };
-let selStar=0, curGame=null, newLogoB64='';
-const newLogoSelectColor = {c: COLORS[0]};
+let curGame=null,newLogoB64='',selSubjCol=COLORS[0],selNoteColor=NOTE_COLORS[0],gamePeriod='week';
+let curFilmScore=7.0;
 
-const LS=k=>localStorage.getItem(k);
-const SS=(k,v)=>localStorage.setItem(k,v);
-
-function save(){SS('wb2',JSON.stringify(S));}
-function load(){
-  const d=LS('wb2');
-  if(d){try{const p=JSON.parse(d);S={...S,...p};}catch(e){}}
-}
+function save(){localStorage.setItem('wb3',JSON.stringify(S));}
+function load(){const d=localStorage.getItem('wb3');if(d){try{const p=JSON.parse(d);S={...S,...p};}catch(e){}}}
 
 // ══ BOOT ══
 load();
 (function init(){
   applyTheme();
-  if(!S.pass){
-    show('scr-setup'); hide('scr-lock'); hide('app');
-    applyLang(); updateSetupHint();
-  } else {
-    hide('scr-setup'); show('scr-lock'); hide('app');
-    updateLockLogo();
-    applyLang();
-  }
+  if(!S.pass){show('scr-setup');hide('scr-lock');hide('app');applyLang();}
+  else{hide('scr-setup');show('scr-lock');hide('app');updateLockLogo();applyLang();}
   if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+  initNoteColorPick();
 })();
-
-function updateSetupHint(){
-  const el=document.getElementById('setup-hint');
-  if(el) el.textContent=t('setup-hint');
-}
 
 // ══ AUTH ══
 function doSetup(){
-  const p1=document.getElementById('sp1').value;
-  const p2=document.getElementById('sp2').value;
+  const p1=document.getElementById('sp1').value,p2=document.getElementById('sp2').value;
   const err=document.getElementById('setup-err');
   if(p1.length<8){err.textContent=t('lm-newp');return;}
-  if(p1!==p2){err.textContent='Parollar uyğun deyil';return;}
-  S.pass=btoa(encodeURIComponent(p1));
-  save(); doUnlockUI();
+  if(p1!==p2){err.textContent='Parollar uyğun deyil / Şifreler uyuşmuyor';return;}
+  S.pass=btoa(encodeURIComponent(p1));save();doUnlockUI();
 }
 function doUnlock(){
-  const v=document.getElementById('lp').value;
-  const err=document.getElementById('lock-err');
-  if(S.pass===btoa(encodeURIComponent(v))){
-    err.textContent=''; hide('scr-lock'); doUnlockUI();
-  } else {
-    err.textContent='❌ Yanlış parol';
-    document.getElementById('lp').value='';
-    document.getElementById('lp').focus();
-  }
+  const v=document.getElementById('lp').value,err=document.getElementById('lock-err');
+  if(S.pass===btoa(encodeURIComponent(v))){err.textContent='';hide('scr-lock');doUnlockUI();}
+  else{err.textContent='❌ Yanlış parol';document.getElementById('lp').value='';document.getElementById('lp').focus();}
 }
-function doLock(){
-  hide('app'); show('scr-lock');
-  document.getElementById('lp').value='';
-  document.getElementById('lp').focus();
-}
-function doUnlockUI(){
-  hide('scr-setup'); hide('scr-lock'); show('app');
-  renderAll(); applyLang(); updateAppLogo();
-}
+function doLock(){hide('app');show('scr-lock');document.getElementById('lp').value='';document.getElementById('lp').focus();}
+function doUnlockUI(){hide('scr-setup');hide('scr-lock');show('app');renderAll();applyLang();updateAppLogo();}
 
 // ══ THEME ══
-function toggleTheme(){
-  S.theme=S.theme==='light'?'dark':'light';
-  save(); applyTheme();
-}
+function toggleTheme(){S.theme=S.theme==='light'?'dark':'light';save();applyTheme();}
 function applyTheme(){
   document.documentElement.setAttribute('data-t',S.theme);
   const on=S.theme==='dark';
-  const tt=document.getElementById('tog-theme');
-  const ti=document.getElementById('theme-ib');
-  if(tt) tt.className='tog'+(on?' on':'');
-  if(ti) ti.textContent=on?'☀️':'🌙';
+  const tt=document.getElementById('tog-theme'),ti=document.getElementById('theme-ib');
+  if(tt)tt.className='tog'+(on?' on':'');
+  if(ti)ti.textContent=on?'☀️':'🌙';
   const mc=document.getElementById('theme-meta');
-  if(mc) mc.content=on?'#0f0f0f':'#ffffff';
+  if(mc)mc.content=on?'#0a0a0a':'#ffffff';
 }
 
 // ══ LANG ══
 function setLang(l){S.lang=l;save();applyLang();renderAll();}
-function t(k,v){
-  let s=(TR[S.lang]||TR.az)[k]||k;
-  if(v) Object.keys(v).forEach(x=>s=s.replace('{'+x+'}',v[x]));
-  return s;
-}
+function t(k,v){let s=(TR[S.lang]||TR.az)[k]||k;if(v)Object.keys(v).forEach(x=>s=s.replace('{'+x+'}',v[x]));return s;}
 function applyLang(){
-  Object.keys(TR[S.lang]||TR.az).forEach(k=>{
-    const el=document.getElementById(k);
-    if(el) el.textContent=t(k);
-  });
-  document.querySelectorAll('.lbtn').forEach(b=>{
-    b.classList.toggle('on',b.textContent.toLowerCase()===S.lang);
-  });
-  updateSetupHint();
+  Object.keys(TR[S.lang]||TR.az).forEach(k=>{const el=document.getElementById(k);if(el)el.textContent=t(k);});
+  document.querySelectorAll('.lbtn').forEach(b=>b.classList.toggle('on',b.textContent.toLowerCase()===S.lang));
+  const sh=document.getElementById('setup-hint');if(sh)sh.textContent=t('setup-hint');
 }
 
-// ══ LOGO / NAME ══
-function openLogoModal(){
-  document.getElementById('appname-inp').value=S.appName;
-  const pr=document.getElementById('logo-preview');
-  pr.src=S.logo||'icon-192.png';
-  newLogoB64='';
-  document.getElementById('logo-file').value='';
-  openModal('m-logo');
-}
+// ══ LOGO ══
 function previewLogo(inp){
-  if(!inp.files[0]) return;
+  if(!inp.files[0])return;
   const r=new FileReader();
-  r.onload=e=>{
-    newLogoB64=e.target.result;
-    document.getElementById('logo-preview').src=newLogoB64;
-  };
+  r.onload=e=>{newLogoB64=e.target.result;document.getElementById('logo-preview').src=newLogoB64;};
   r.readAsDataURL(inp.files[0]);
 }
 function saveLogo(){
   S.appName=document.getElementById('appname-inp').value.trim()||'White Book';
-  if(newLogoB64) S.logo=newLogoB64;
-  save(); closeModal('m-logo'); updateAppLogo();
+  if(newLogoB64)S.logo=newLogoB64;
+  save();closeModal('m-logo');updateAppLogo();
 }
 function updateAppLogo(){
   const src=S.logo||'icon-192.png';
-  ['app-logo','set-logo-prev'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.src=src;
-  });
-  const ln=document.getElementById('app-name-lbl');
-  const sn=document.getElementById('set-app-name-disp');
-  if(ln) ln.textContent=S.appName;
-  if(sn) sn.textContent=S.appName;
-  // lock screen
-  const ll=document.getElementById('lock-logo-img');
-  const la=document.getElementById('lock-app-name');
-  if(ll) ll.src=src;
-  if(la) la.textContent=S.appName;
+  ['app-logo','set-logo-prev'].forEach(id=>{const el=document.getElementById(id);if(el)el.src=src;});
+  const ln=document.getElementById('app-name-lbl'),sn=document.getElementById('set-app-name-disp');
+  if(ln)ln.textContent=S.appName;if(sn)sn.textContent=S.appName;
+  updateLockLogo();
 }
 function updateLockLogo(){
   const src=S.logo||'icon-192.png';
-  const ll=document.getElementById('lock-logo-img');
-  const la=document.getElementById('lock-app-name');
-  if(ll) ll.src=src;
-  if(la) la.textContent=S.appName||'WHITE BOOK';
+  const ll=document.getElementById('lock-logo-img'),la=document.getElementById('lock-app-name');
+  if(ll)ll.src=src;if(la)la.textContent=S.appName||'WHITE BOOK';
 }
 
 // ══ NAV ══
@@ -730,47 +783,44 @@ function goPage(name,btn){
 }
 
 // ══ RENDER ALL ══
-function renderAll(){
-  renderDayGrid(); renderSubj(); renderGames(); renderFilms();
-  updateLessonStats(); updateGameStats(); updateMonthLbl(); updateAppLogo();
-}
+function renderAll(){renderDayGrid();renderSubj();renderGames();renderFilms();renderNotes();updateLessonStats();updateGameStats();updateMonthLbl();updateAppLogo();}
 
-// ══ WEEK LESSONS ══
-function wkKey(){
-  const d=new Date(),j=new Date(d.getFullYear(),0,1);
-  return d.getFullYear()+'-W'+Math.ceil(((d-j)/86400000+j.getDay()+1)/7);
-}
+// ══ WEEK KEY / LESSONS ══
+function wkKey(){const d=new Date(),j=new Date(d.getFullYear(),0,1);return d.getFullYear()+'-W'+Math.ceil(((d-j)/86400000+j.getDay()+1)/7);}
+function mkKey(){return S.cy+'-'+S.cm;}
+function todayDow(){let d=new Date().getDay();return d===0?6:d-1;}
+
 function renderDayGrid(){
-  const wk=wkKey();
-  if(!S.dailyQ[wk]) S.dailyQ[wk]={};
+  const wk=wkKey();if(!S.dailyQ[wk])S.dailyQ[wk]={};
   const days=DAYS_MAP[S.lang]||DAYS_MAP.az;
-  const g=document.getElementById('day-grid');
-  if(!g) return;
+  const td=todayDow();
+  const g=document.getElementById('day-grid');if(!g)return;
   g.innerHTML=days.map((n,i)=>`
     <div class="dcell">
-      <div class="dname">${n}</div>
-      <input class="dinp" type="number" min="0" max="9999" value="${S.dailyQ[wk][i]||''}" placeholder="0" oninput="saveDQ(${i},this.value)">
+      <div class="dname" style="${i===td?'color:var(--acc)':''}">${n}</div>
+      <input class="dinp${S.dailyQ[wk][i]?' has-val':''}" type="number" min="0" max="9999"
+        value="${S.dailyQ[wk][i]||''}" placeholder="0"
+        style="${i===td?'border-color:var(--acc)':''}"
+        oninput="saveDQ(${i},this.value)">
     </div>`).join('');
   renderBarChart();
 }
 function saveDQ(i,v){
-  const wk=wkKey();
-  if(!S.dailyQ[wk]) S.dailyQ[wk]={};
-  S.dailyQ[wk][i]=parseInt(v)||0;
-  save(); renderBarChart(); updateLessonStats();
+  const wk=wkKey();if(!S.dailyQ[wk])S.dailyQ[wk]={};
+  S.dailyQ[wk][i]=parseInt(v)||0;save();renderBarChart();updateLessonStats();
 }
 function renderBarChart(){
   const wk=wkKey(),data=S.dailyQ[wk]||{};
   const vals=[0,1,2,3,4,5,6].map(i=>data[i]||0);
   const mx=Math.max(...vals,1);
   const days=DAYS_MAP[S.lang]||DAYS_MAP.az;
-  const bc=document.getElementById('bar-chart');
-  if(!bc) return;
+  const td=todayDow();
+  const bc=document.getElementById('bar-chart');if(!bc)return;
   bc.innerHTML=vals.map((v,i)=>`
     <div class="bcol">
-      <div class="bval">${v||''}</div>
-      <div class="bbar" style="height:${Math.round(v/mx*70)}px"></div>
-      <div class="blbl">${days[i]}</div>
+      <div class="bval" style="color:${i===td?'var(--acc)':'var(--text2)'}">${v||''}</div>
+      <div class="bbar${i===td?' today':''}" style="height:${Math.round(v/mx*80)}px;${i===td?'background:var(--acc)':''}"></div>
+      <div class="blbl" style="${i===td?'color:var(--acc)':''}">${days[i]}</div>
     </div>`).join('');
 }
 function updateLessonStats(){
@@ -778,143 +828,203 @@ function updateLessonStats(){
   const total=Object.values(data).reduce((a,b)=>a+b,0);
   const avg=Math.round(total/7);
   const e1=document.getElementById('st-total'),e2=document.getElementById('st-avg');
-  if(e1) e1.textContent=total;
-  if(e2) e2.textContent=avg;
+  if(e1)e1.textContent=total;if(e2)e2.textContent=avg;
 }
 
-// ══ MONTHLY GRADES ══
-function mkKey(){return S.cy+'-'+S.cm;}
+// ══ WEEK/MONTH STATS MODALS ══
+function showWeekModal(){
+  const wk=wkKey(),data=S.dailyQ[wk]||{};
+  const vals=[0,1,2,3,4,5,6].map(i=>data[i]||0);
+  const total=vals.reduce((a,b)=>a+b,0);
+  const days=DAYS_MAP[S.lang]||DAYS_MAP.az;
+  const best=Math.max(...vals);
+  const body=document.getElementById('weekstats-body');
+  body.innerHTML=`
+    <div class="week-summary">
+      <div class="ws-item"><div class="ws-num">${total}</div><div class="ws-lbl">${t('l-total-q')}</div></div>
+      <div class="ws-item"><div class="ws-num">${Math.round(total/7)}</div><div class="ws-lbl">${t('l-daily-avg')}</div></div>
+      <div class="ws-item"><div class="ws-num">${best}</div><div class="ws-lbl">Ən yaxşı gün</div></div>
+      <div class="ws-item"><div class="ws-num">${vals.filter(v=>v>0).length}</div><div class="ws-lbl">Aktiv gün</div></div>
+    </div>
+    <div style="margin-top:14px">
+      ${days.map((d,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--brd)">
+        <span style="font-size:12px;font-weight:700;width:28px;color:var(--text2)">${d}</span>
+        <div style="flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${best?Math.round(vals[i]/best*100):0}%;background:var(--acc);border-radius:4px"></div>
+        </div>
+        <span style="font-size:13px;font-weight:700;width:36px;text-align:right">${vals[i]||0}</span>
+      </div>`).join('')}
+    </div>`;
+  openModal('m-weekstats');
+}
+
+function showMonthModal(){
+  const mk=mkKey(),qs=S.questions[mk]||{};
+  const body=document.getElementById('monthstats-body');
+  const totalMonth=S.subjects.reduce((a,s)=>a+(qs[s.id]||0),0);
+  body.innerHTML=`
+    <div style="font-size:22px;font-weight:900;text-align:center;margin-bottom:4px">${totalMonth}</div>
+    <div style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:16px;font-weight:600">${(MONTHS_MAP[S.lang]||MONTHS_MAP.az)[S.cm]} ${S.cy} — ${t('l-month-total')}</div>
+    ${S.subjects.map(s=>{
+      const q=qs[s.id]||0;
+      const pct=totalMonth?Math.round(q/totalMonth*100):0;
+      return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--brd)">
+        <div style="width:10px;height:10px;border-radius:50%;background:${s.color};flex-shrink:0"></div>
+        <span style="flex:1;font-size:13px;font-weight:600">${s.name}</span>
+        <div style="width:80px;height:7px;background:var(--bg3);border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${s.color};border-radius:4px"></div>
+        </div>
+        <span style="font-size:13px;font-weight:800;width:40px;text-align:right">${q}</span>
+      </div>`;
+    }).join('')}`;
+  openModal('m-monthstats');
+}
+
+// ══ SUBJECTS (QUESTIONS) ══
 function chMonth(d){
   S.cm+=d;
   if(S.cm<0){S.cm=11;S.cy--;}
   if(S.cm>11){S.cm=0;S.cy++;}
-  updateMonthLbl(); renderSubj();
+  updateMonthLbl();renderSubj();
 }
 function updateMonthLbl(){
   const el=document.getElementById('month-lbl');
-  if(el) el.textContent=(MONTHS_MAP[S.lang]||MONTHS_MAP.az)[S.cm]+' '+S.cy;
+  if(el)el.textContent=(MONTHS_MAP[S.lang]||MONTHS_MAP.az)[S.cm]+' '+S.cy;
 }
 function renderSubj(){
   updateMonthLbl();
   const mk=mkKey();
-  if(!S.grades[mk]) S.grades[mk]={};
-  const list=document.getElementById('subj-list');
-  if(!list) return;
+  if(!S.questions[mk])S.questions[mk]={};
+  const list=document.getElementById('subj-list');if(!list)return;
   list.innerHTML=S.subjects.map(s=>{
-    const gs=S.grades[mk][s.id]||[];
-    const avg=gs.length?(gs.reduce((a,b)=>a+b,0)/gs.length).toFixed(1):'—';
+    const q=S.questions[mk][s.id]||0;
     return `<div class="srow">
       <div class="sdot" style="background:${s.color}"></div>
       <div class="sname">${s.name}</div>
-      <input class="sgrade" type="number" min="1" max="100" placeholder="—"
-        onchange="addGrade(${s.id},this.value)" title="Yeni qiymət">
-      <div class="savg">${avg!=='—'?'⌀ '+avg:'—'}</div>
+      <input class="sq-inp" type="number" min="0" max="99999" value="${q||''}" placeholder="0"
+        onchange="saveSubjQ(${s.id},this.value)">
+      <div class="savg" style="color:${s.color}">${q>0?q+' sual':'—'}</div>
     </div>`;
   }).join('');
-  updateMonthAvg();
+  updateMonthTotal();
 }
-function addGrade(id,v){
+function saveSubjQ(id,v){
   const mk=mkKey();
-  if(!S.grades[mk]) S.grades[mk]={};
-  if(!S.grades[mk][id]) S.grades[mk][id]=[];
-  const n=parseFloat(v);
-  if(!isNaN(n)&&n>=0&&n<=100){S.grades[mk][id].push(n);save();updateMonthAvg();renderSubj();}
+  if(!S.questions[mk])S.questions[mk]={};
+  S.questions[mk][id]=parseInt(v)||0;
+  save();updateMonthTotal();renderSubj();
 }
-function updateMonthAvg(){
-  const gs=S.grades[mkKey()]||{};
-  let all=[];
-  Object.values(gs).forEach(a=>all=all.concat(a));
-  const el=document.getElementById('month-avg');
-  if(el) el.textContent=all.length?(all.reduce((a,b)=>a+b,0)/all.length).toFixed(1):'—';
+function updateMonthTotal(){
+  const mk=mkKey(),qs=S.questions[mk]||{};
+  const total=S.subjects.reduce((a,s)=>a+(qs[s.id]||0),0);
+  const el=document.getElementById('month-total');if(el)el.textContent=total;
 }
 
 // ══ SUBJECTS MODAL ══
-const SCOLS=['#e74c3c','#e67e22','#f1c40f','#27ae60','#2563eb','#7c3aed','#e91e63','#00bcd4'];
-let selSubjCol=SCOLS[0];
+const SCOLS=['#e74c3c','#e67e22','#f1c40f','#27ae60','#2563eb','#7c3aed','#e91e63','#00bcd4','#64748b'];
 function openSubjMgr(){
   renderSubjMgr();
-  // color btns
   const cb=document.getElementById('subj-col-btns');
   cb.innerHTML=SCOLS.map(c=>`<div class="col-btn${c===selSubjCol?' sel':''}" style="background:${c}" onclick="selSubjColor('${c}')"></div>`).join('');
   openModal('m-subj');
 }
 function selSubjColor(c){
   selSubjCol=c;
-  document.querySelectorAll('.col-btn').forEach(b=>{
-    b.classList.toggle('sel',b.style.background===c||b.style.backgroundColor===c);
-  });
+  document.querySelectorAll('#subj-col-btns .col-btn').forEach(b=>b.classList.toggle('sel',b.style.background===c||b.style.backgroundColor===c));
 }
 function renderSubjMgr(){
   const list=document.getElementById('subj-mgr-list');
   list.innerHTML=S.subjects.map(s=>`
     <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--brd)">
-      <div class="sdot" style="background:${s.color};width:12px;height:12px"></div>
-      <span style="flex:1;font-size:13px">${s.name}</span>
+      <div style="width:12px;height:12px;border-radius:50%;background:${s.color};flex-shrink:0"></div>
+      <span style="flex:1;font-size:13px;font-weight:600">${s.name}</span>
       <button class="btn btn-out" style="padding:4px 10px;font-size:12px" onclick="delSubj(${s.id})">✕</button>
     </div>`).join('');
 }
 function addSubj(){
-  const n=document.getElementById('new-subj-inp').value.trim();
-  if(!n) return;
+  const n=document.getElementById('new-subj-inp').value.trim();if(!n)return;
   S.subjects.push({id:Date.now(),name:n,color:selSubjCol});
-  document.getElementById('new-subj-inp').value='';
-  save(); renderSubjMgr();
+  document.getElementById('new-subj-inp').value='';save();renderSubjMgr();
 }
-function delSubj(id){
-  S.subjects=S.subjects.filter(s=>s.id!==id);
-  save(); renderSubjMgr();
-}
+function delSubj(id){S.subjects=S.subjects.filter(s=>s.id!==id);save();renderSubjMgr();}
 
 // ══ GAMES ══
-function openGameModal(){
+let _gamePeriod='week';
+function setGamePeriod(p,btn){
+  _gamePeriod=p;
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  updateGameStats();renderGames();
+}
+function openAddGame(){
   document.getElementById('new-game-inp').value='';
   const ch=document.getElementById('preset-chips');
-  ch.innerHTML=Object.entries(GAMES_PRESET).map(([n,i])=>
-    `<div class="chip" onclick="document.getElementById('new-game-inp').value='${n}'">${i} ${n}</div>`
-  ).join('');
+  ch.innerHTML=Object.entries(GAMES_PRESET).map(([n,i])=>`<div class="chip" onclick="document.getElementById('new-game-inp').value='${n}'">${i} ${n}</div>`).join('');
   openModal('m-addgame');
 }
-// override open for add game
-const _origOpenAddGame=()=>openGameModal();
-document.getElementById('l-add-game-btn').addEventListener('click',e=>{e.stopPropagation();_origOpenAddGame();},true);
-
 function addGame(){
-  const n=document.getElementById('new-game-inp').value.trim();
-  if(!n) return;
+  const n=document.getElementById('new-game-inp').value.trim();if(!n)return;
   S.games.push({id:Date.now(),name:n,icon:GAMES_PRESET[n]||'🎮',sessions:[]});
-  save(); closeModal('m-addgame'); renderGames(); updateGameStats();
+  save();closeModal('m-addgame');renderGames();updateGameStats();
+}
+function getGameHours(g,period){
+  const now=new Date();
+  return g.sessions.filter(s=>{
+    const d=new Date(s.date);
+    if(period==='week'){
+      const today=new Date();today.setHours(0,0,0,0);
+      const mon=new Date(today);mon.setDate(today.getDate()-(todayDow()));
+      return d>=mon;
+    }
+    if(period==='month')return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+    return true;
+  }).reduce((a,s)=>a+s.hours,0);
 }
 function renderGames(){
-  const list=document.getElementById('games-list');
-  if(!list) return;
-  if(!S.games.length){
-    list.innerHTML=`<div class="empty"><div class="empty-ico">🎮</div><div>${t('l-add-game-btn')}</div></div>`;
-    return;
-  }
-  const now=new Date();
+  const list=document.getElementById('games-list');if(!list)return;
+  if(!S.games.length){list.innerHTML=`<div class="empty"><div class="empty-ico">🎮</div><div class="empty-txt">${t('l-add-game-btn')}</div></div>`;return;}
   list.innerHTML=S.games.map(g=>{
-    const mh=g.sessions.filter(s=>{const d=new Date(s.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce((a,s)=>a+s.hours,0);
+    const h=getGameHours(g,_gamePeriod);
     const th=g.sessions.reduce((a,s)=>a+s.hours,0);
     return `<div class="gitem">
       <div class="gicon">${g.icon}</div>
       <div class="ginfo">
         <div class="gname">${g.name}</div>
-        <div class="ghours">${t('month-session',{h:mh.toFixed(1)})} · Toplam: ${th.toFixed(1)}s</div>
+        <div class="ghours">${h.toFixed(1)}s · Toplam: ${th.toFixed(1)}s</div>
       </div>
-      <button class="gbtn" onclick="openLogH(${g.id})">+ Sessiya</button>
-      <button class="ib" style="margin-left:4px;font-size:13px" onclick="delGame(${g.id})">🗑️</button>
+      <button class="gbtn" onclick="openGameStats(${g.id})">📊</button>
+      <button class="gbtn" onclick="openLogH(${g.id})" style="margin-left:4px">+</button>
+      <button class="ib" style="margin-left:4px;font-size:13px;border:none" onclick="delGame(${g.id})">🗑️</button>
     </div>`;
   }).join('');
 }
+function openGameStats(id){
+  const g=S.games.find(x=>x.id===id);
+  const wh=getGameHours(g,'week'),mh=getGameHours(g,'month'),th=g.sessions.reduce((a,s)=>a+s.hours,0);
+  document.getElementById('gstats-title').textContent=g.icon+' '+g.name;
+  document.getElementById('gstats-body').innerHTML=`
+    <div class="week-summary" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:14px">
+      <div class="ws-item"><div class="ws-num">${wh.toFixed(1)}</div><div class="ws-lbl">${t('gtab-week')}</div></div>
+      <div class="ws-item"><div class="ws-num">${mh.toFixed(1)}</div><div class="ws-lbl">${t('gtab-month')}</div></div>
+      <div class="ws-item"><div class="ws-num">${th.toFixed(1)}</div><div class="ws-lbl">${t('gtab-all')}</div></div>
+    </div>
+    <div style="font-size:12px;color:var(--text2);font-weight:700;margin-bottom:8px">Son sessiyalar</div>
+    ${g.sessions.slice().reverse().slice(0,8).map(s=>`
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--brd);font-size:13px">
+        <span style="color:var(--text2)">${s.date}</span>
+        <span style="font-weight:700">${s.hours}s</span>
+      </div>`).join('')}
+    ${!g.sessions.length?'<div style="text-align:center;color:var(--text3);padding:20px">Sessiya yoxdur</div>':''}`;
+  openModal('m-gamestats');
+}
 function delGame(id){
-  if(!confirm('Oyunu sil?')) return;
-  S.games=S.games.filter(g=>g.id!==id);
-  save(); renderGames(); updateGameStats();
+  if(!confirm('Oyunu sil?'))return;
+  S.games=S.games.filter(g=>g.id!==id);save();renderGames();updateGameStats();
 }
 function openLogH(id){
   curGame=id;
   const g=S.games.find(x=>x.id===id);
-  document.getElementById('log-title').textContent=g.name+' — Sessiya';
+  document.getElementById('log-title').textContent=g.icon+' '+g.name;
   document.getElementById('log-h').value='1';
   document.getElementById('log-d').value=new Date().toISOString().split('T')[0];
   openModal('m-loghours');
@@ -922,92 +1032,128 @@ function openLogH(id){
 function saveLog(){
   const h=parseFloat(document.getElementById('log-h').value);
   const d=document.getElementById('log-d').value;
-  if(!h||!d) return;
+  if(!h||!d)return;
   const g=S.games.find(x=>x.id===curGame);
   if(g){g.sessions.push({date:d,hours:h});save();}
-  closeModal('m-loghours'); renderGames(); updateGameStats();
+  closeModal('m-loghours');renderGames();updateGameStats();
 }
 function updateGameStats(){
-  const now=new Date();
   let total=0;
-  S.games.forEach(g=>g.sessions.forEach(s=>{
-    const d=new Date(s.date);
-    if(d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()) total+=s.hours;
-  }));
+  S.games.forEach(g=>total+=getGameHours(g,_gamePeriod));
   const e1=document.getElementById('st-ghours'),e2=document.getElementById('st-gcnt');
-  if(e1) e1.textContent=total.toFixed(1);
-  if(e2) e2.textContent=S.games.length;
+  if(e1)e1.textContent=total.toFixed(1);if(e2)e2.textContent=S.games.length;
 }
 
 // ══ FILMS ══
-function setStar(n){
-  selStar=n;
-  document.querySelectorAll('#star-row .star').forEach((s,i)=>s.textContent=i<n?'⭐':'☆');
+function filmScoreColor(score){
+  if(score>=8)return '#22c55e';
+  if(score>=7)return '#4ade80';
+  if(score>=6)return '#a3e635';
+  if(score>=5)return '#facc15';
+  if(score>=4)return '#fb923c';
+  if(score>=3)return '#f87171';
+  if(score>=2)return '#ef4444';
+  return '#dc2626';
+}
+function updateScore(v){
+  curFilmScore=parseFloat(v);
+  const disp=document.getElementById('score-disp');
+  if(disp){disp.textContent=curFilmScore.toFixed(1);disp.style.color=filmScoreColor(curFilmScore);}
 }
 function addFilm(){
-  const n=document.getElementById('film-inp').value.trim();
-  if(!n) return;
-  S.films.push({id:Date.now(),name:n,rating:selStar,emoji:FILM_EMOJIS[Math.floor(Math.random()*FILM_EMOJIS.length)]});
+  const n=document.getElementById('film-inp').value.trim();if(!n)return;
+  S.films.push({id:Date.now(),name:n,score:curFilmScore,emoji:FILM_EMOJIS[Math.floor(Math.random()*FILM_EMOJIS.length)],date:new Date().toISOString().split('T')[0]});
   document.getElementById('film-inp').value='';
-  selStar=0; setStar(0); save(); renderFilms();
+  document.getElementById('score-slider').value=7;
+  updateScore(7);save();renderFilms();
 }
 function delFilm(id){S.films=S.films.filter(f=>f.id!==id);save();renderFilms();}
 function renderFilms(){
-  const grid=document.getElementById('films-grid');
-  const cnt=document.getElementById('film-cnt');
-  if(cnt) cnt.textContent=S.films.length;
-  if(!grid) return;
-  if(!S.films.length){
-    grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="empty-ico">🎬</div></div>`;
-    return;
-  }
-  grid.innerHTML=S.films.map(f=>`
-    <div class="fcard">
+  const grid=document.getElementById('films-grid'),cnt=document.getElementById('film-cnt');
+  if(cnt)cnt.textContent=S.films.length;
+  if(!grid)return;
+  if(!S.films.length){grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="empty-ico">🎬</div><div class="empty-txt">Film əlavə et</div></div>`;return;}
+  grid.innerHTML=S.films.map(f=>{
+    const col=filmScoreColor(f.score);
+    return `<div class="fcard">
       <button class="fdel" onclick="delFilm(${f.id})">✕</button>
       <div class="fmoji">${f.emoji}</div>
       <div class="ftitle">${f.name}</div>
-      <div class="fstars">${'⭐'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</div>
+      <div class="fscore" style="color:${col}">${f.score.toFixed(1)}</div>
+      <div class="fscore-bar" style="background:${col}22"><div style="height:100%;width:${f.score*10}%;background:${col};border-radius:2px"></div></div>
+      <div class="fdate">${f.date||''}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══ NOTES ══
+function initNoteColorPick(){
+  const pick=document.getElementById('note-color-pick');if(!pick)return;
+  pick.innerHTML=NOTE_COLORS.map(c=>`<div class="nc${c===selNoteColor?' sel':''}" style="background:${c}" onclick="selNoteClr('${c}')"></div>`).join('');
+}
+function selNoteClr(c){
+  selNoteColor=c;
+  document.querySelectorAll('#note-color-pick .nc').forEach(b=>b.classList.toggle('sel',b.style.background===c||b.style.backgroundColor===c));
+}
+function addNote(){
+  const title=document.getElementById('note-title-inp').value.trim();
+  const body=document.getElementById('note-body-inp').value.trim();
+  if(!title&&!body)return;
+  const tag=document.getElementById('note-tag-inp').value.trim();
+  S.notes.unshift({id:Date.now(),title:title||'—',body,tag,color:selNoteColor,date:new Date().toLocaleDateString()});
+  document.getElementById('note-title-inp').value='';
+  document.getElementById('note-body-inp').value='';
+  document.getElementById('note-tag-inp').value='';
+  save();renderNotes();
+}
+function delNote(id){S.notes=S.notes.filter(n=>n.id!==id);save();renderNotes();}
+function renderNotes(){
+  const list=document.getElementById('notes-list');if(!list)return;
+  if(!S.notes.length){list.innerHTML=`<div class="empty"><div class="empty-ico">📝</div><div class="empty-txt">İlk notunuzu yazın</div></div>`;return;}
+  list.innerHTML=S.notes.map(n=>`
+    <div class="note-card" style="border-left:4px solid ${n.color||'var(--acc)'}">
+      <button class="note-del" onclick="delNote(${n.id})">✕</button>
+      <div class="note-header">
+        <div class="note-title">${n.title}</div>
+        <div class="note-date">${n.date}</div>
+      </div>
+      ${n.body?`<div class="note-body">${n.body}</div>`:''}
+      ${n.tag?`<span class="note-tag" style="background:${n.color}22;color:${n.color}">${n.tag}</span>`:''}
     </div>`).join('');
 }
 
 // ══ CHANGE PASS ══
 function doChPass(){
-  const old=document.getElementById('cp-old').value;
-  const n1=document.getElementById('cp-new1').value;
-  const n2=document.getElementById('cp-new2').value;
+  const old=document.getElementById('cp-old').value,n1=document.getElementById('cp-new1').value,n2=document.getElementById('cp-new2').value;
   const err=document.getElementById('cp-err');
   if(S.pass!==btoa(encodeURIComponent(old))){err.textContent='Köhnə parol yanlışdır';return;}
   if(n1.length<8){err.textContent='Min. 8 simvol';return;}
   if(n1!==n2){err.textContent='Parollar uyğun deyil';return;}
-  S.pass=btoa(encodeURIComponent(n1));
-  save(); err.textContent=''; closeModal('m-chpass');
+  S.pass=btoa(encodeURIComponent(n1));save();err.textContent='';closeModal('m-chpass');
 }
 
 // ══ RESET ══
 function doReset(){
-  if(!confirm('Bütün məlumatlar silinəcək!')) return;
+  if(!confirm('Bütün məlumatlar silinəcək!'))return;
   const{pass,lang,theme,appName,logo}=S;
   S={lang,theme,pass,appName,logo,
-    subjects:[
-      {id:1,name:'Riyaziyyat',color:'#2563eb'},{id:2,name:'Fizika',color:'#e67e22'},
-      {id:3,name:'Kimya',color:'#27ae60'},{id:4,name:'Ədəbiyyat',color:'#e74c3c'}
-    ],
-    grades:{},dailyQ:{},games:[],films:[],
-    cm:new Date().getMonth(),cy:new Date().getFullYear()
+    subjects:[{id:1,name:'Riyaziyyat',color:'#2563eb'},{id:2,name:'Fizika',color:'#e67e22'},{id:3,name:'Kimya',color:'#27ae60'},{id:4,name:'Biologiya',color:'#e91e63'}],
+    questions:{},dailyQ:{},games:[],films:[],notes:[],cm:new Date().getMonth(),cy:new Date().getFullYear()
   };
-  save(); renderAll();
+  save();renderAll();
 }
 
-// ══ MODAL HELPERS ══
+// ══ MODALS ══
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.overlay').forEach(o=>{
-  o.addEventListener('click',e=>{if(e.target===o) o.classList.remove('open');});
-});
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
 // ══ HELPERS ══
 function show(id){document.getElementById(id).style.display='flex';}
 function hide(id){document.getElementById(id).style.display='none';}
+
+// Init score display color
+updateScore(7);
 </script>
 </body>
 </html>
